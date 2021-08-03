@@ -17,7 +17,11 @@ namespace SBoxDeathrun.Player
 			sc.TargetPos = spawnPoint.Position;
 			Camera = sc;
 
+			EnableAllCollisions = false;
+			EnableDrawing = false;
+
 			base.Respawn();
+			LifeState = LifeState.Dead;
 		}
 
 		public override void Simulate( Client cl )

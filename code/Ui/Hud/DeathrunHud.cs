@@ -8,6 +8,7 @@ namespace SBoxDeathrun.Ui.Hud
 		private readonly Label roundLabel;
 		private readonly Label timeLeftLabel;
 		private readonly Label playerTypeLabel;
+		private readonly Label healthLabel;
 
 		public DeathrunHud()
 		{
@@ -19,6 +20,7 @@ namespace SBoxDeathrun.Ui.Hud
 			roundLabel = AddChild<Label>();
 			timeLeftLabel = AddChild<Label>();
 			playerTypeLabel = AddChild<Label>();
+			healthLabel = AddChild<Label>();
 		}
 
 		public override void Tick()
@@ -33,6 +35,7 @@ namespace SBoxDeathrun.Ui.Hud
 				? $"Time Left: {(rm.RoundStartTime + currentRound.TimeLimit.Limit) - Time.Now}"
 				: "Time Left: Limitless";
 			playerTypeLabel.Text = $"Player Type: {Local.Pawn}";
+			healthLabel.Text = $"Health: {Local.Pawn.Health}";
 		}
 	}
 }

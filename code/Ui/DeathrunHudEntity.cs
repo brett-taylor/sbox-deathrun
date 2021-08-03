@@ -19,6 +19,8 @@ namespace SBoxDeathrun.Ui
 			RootPanel.AddChild<ChatBox>();
 			RootPanel.AddChild<VoiceList>();
 			RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
+			RootPanel.AddChild<CrosshairCanvas>();
+			RootPanel.AddChild<KillFeed>();
 		}
 
 		[Event.HotloadAttribute]
