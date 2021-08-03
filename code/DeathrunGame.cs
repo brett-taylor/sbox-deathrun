@@ -1,5 +1,6 @@
 ﻿using Sandbox;
 using SBoxDeathrun.Round;
+using SBoxDeathrun.Ui;
 
 namespace SBoxDeathrun
 {
@@ -10,10 +11,11 @@ namespace SBoxDeathrun
 
 		public DeathrunGame()
 		{
-			if ( Host.IsClient )
+			if ( Host.IsServer == false )
 				return;
 
 			RoundManager = new RoundManager();
+			var _ = new DeathrunHudEntity();
 		}
 
 		public override void ClientJoined( Client client )

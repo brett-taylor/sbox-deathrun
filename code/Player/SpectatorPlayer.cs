@@ -19,5 +19,12 @@ namespace SBoxDeathrun.Player
 
 			base.Respawn();
 		}
+
+		public override void Simulate( Client cl )
+		{
+			var controller = GetActiveController();
+			controller?.Simulate( cl, this, GetActiveAnimator() );
+			SimulateActiveChild( cl, ActiveChild );
+		}
 	}
 }

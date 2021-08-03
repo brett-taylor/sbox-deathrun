@@ -1,5 +1,4 @@
 ﻿using Sandbox;
-using SBoxDeathrun.Round;
 
 namespace SBoxDeathrun.Player
 {
