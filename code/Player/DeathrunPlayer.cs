@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using SBoxDeathrun.Round;
 
 namespace SBoxDeathrun.Player
 {
@@ -21,7 +22,11 @@ namespace SBoxDeathrun.Player
 
 		public override void Simulate( Client cl )
 		{
-			base.Simulate( cl );
+			if ( LifeState == LifeState.Dead )
+				return;
+
+			var controller = GetActiveController();
+			controller?.Simulate( cl, this, GetActiveAnimator() );
 			SimulateActiveChild( cl, ActiveChild );
 		}
 

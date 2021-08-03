@@ -1,4 +1,19 @@
 {
+    "name": "Deathrun: SBox",
+    "version": "0.1",
     "sharedassets": "*.*",
-    "type": "game"
+    "ident": "deathrun.deathrun",
+    "depends": 
+    [
+        "base",
+        "citizen"
+    ],
+    "gamemodes":
+    [
+        {
+            "name": "deathrun",
+            "title": "Deathrun: SBox",
+            "description": "The popular source one gamemode Deathrun, reimagined for S&Box."
+        }
+    ]
 }
