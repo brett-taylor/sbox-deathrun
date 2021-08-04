@@ -21,7 +21,7 @@ namespace SBoxDeathrun.Round
 			if ( Round is null )
 				return;
 
-			if ( CurrentRoundType != RoundType.WAITING_FOR_PLAYERS && Client.All.Count < RoundConfig.MINIMUM_PLAYERS )
+			if ( CurrentRoundType != RoundType.WAITING_FOR_PLAYERS && Client.All.Count < GameConfig.MINIMUM_PLAYERS )
 			{
 				ChangeRounds( RoundType.WAITING_FOR_PLAYERS );
 				return;

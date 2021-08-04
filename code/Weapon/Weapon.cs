@@ -151,12 +151,12 @@ namespace SBoxDeathrun.Weapon
 
 		public override bool CanPrimaryAttack()
 		{
-			return base.CanPrimaryAttack() && DeathrunGame.Current.RoundManager.Round.PlayersFrozen == false;
+			return base.CanPrimaryAttack() && DeathrunGame.Current.RoundManager.Round.PawnsFrozen == false;
 		}
 
 		public override bool CanSecondaryAttack()
 		{
-			return base.CanSecondaryAttack() && DeathrunGame.Current.RoundManager.Round.PlayersFrozen == false;
+			return base.CanSecondaryAttack() && DeathrunGame.Current.RoundManager.Round.PawnsFrozen == false;
 		}
 	}
 }

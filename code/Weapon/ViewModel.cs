@@ -1,6 +1,6 @@
 ﻿using System;
 using Sandbox;
-using SBoxDeathrun.Player;
+using SBoxDeathrun.Pawn;
 
 namespace SBoxDeathrun.Weapon
 {
@@ -41,7 +41,7 @@ namespace SBoxDeathrun.Weapon
 
 			var playerVelocity = Local.Pawn.Velocity;
 
-			if ( Local.Pawn is AlivePlayer player )
+			if ( Local.Pawn is PlayerPawn player )
 			{
 				var controller = player.GetActiveController();
 				if ( controller != null && controller.HasTag( "noclip" ) )

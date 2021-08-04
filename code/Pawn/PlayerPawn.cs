@@ -1,12 +1,12 @@
 ﻿using Sandbox;
-using SBoxDeathrun.Player.Controller;
+using SBoxDeathrun.Pawn.Controller;
 using SBoxDeathrun.Weapon;
 
-namespace SBoxDeathrun.Player
+namespace SBoxDeathrun.Pawn
 {
-	public class AlivePlayer : TeamedPlayer
+	public class PlayerPawn : BasePawn
 	{
-		public AlivePlayer()
+		public PlayerPawn()
 		{
 			Inventory = new Inventory( this );
 		}
@@ -14,7 +14,7 @@ namespace SBoxDeathrun.Player
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
-			Controller = new AlivePlayerController();
+			Controller = new PlayerPawnController();
 			Animator = new StandardPlayerAnimator();
 			Camera = new ThirdPersonCamera();
 

@@ -1,7 +1,5 @@
 using Sandbox;
 using Sandbox.UI;
-using SBoxDeathrun.Player;
-using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Ui.Hud
 {
@@ -42,8 +40,8 @@ namespace SBoxDeathrun.Ui.Hud
 				: "Time Left: Limitless";
 			playerTypeLabel.Text = $"Player Type: {Local.Pawn}";
 			healthLabel.Text = $"Health: {Local.Pawn.Health}";
-			teamLabel.Text = $"Team: {(Local.Pawn as TeamedPlayer).Team.NiceName()}";
-			frozenLabel.Text = $"Frozen Round: {currentRound.PlayersFrozen}";
+			teamLabel.Text = $"Team: No team";
+			frozenLabel.Text = $"Frozen Round: {currentRound.PawnsFrozen}";
 		}
 	}
 }

@@ -1,9 +1,9 @@
 using System;
 using Sandbox;
 
-namespace SBoxDeathrun.Player.Camera
+namespace SBoxDeathrun.Pawn.Camera
 {
-	public class DeadPlayerCamera : Sandbox.Camera
+	public class FreeCamera : Sandbox.Camera
 	{
 		public Vector3 TargetPos { get; set; }
 		public Rotation TargetRot { get; set; }

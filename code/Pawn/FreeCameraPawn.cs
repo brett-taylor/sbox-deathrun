@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
 using Sandbox;
-using SBoxDeathrun.Player.Camera;
+using SBoxDeathrun.Pawn.Camera;
 
-namespace SBoxDeathrun.Player
+namespace SBoxDeathrun.Pawn
 {
-	public class DeadPlayer : TeamedPlayer
+	public class FreeCameraPawn : BasePawn
 	{
 		public override void Respawn()
 		{
-			var sc = new DeadPlayerCamera();
+			var sc = new FreeCamera();
 			var spawnPoint = All
 				.OfType<SpawnPoint>()
 				.OrderBy( _ => Guid.NewGuid() )

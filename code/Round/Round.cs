@@ -1,6 +1,5 @@
 using Sandbox;
-using SBoxDeathrun.Player;
-using SBoxDeathrun.Team;
+using SBoxDeathrun.Pawn;
 
 namespace SBoxDeathrun.Round
 {
@@ -10,7 +9,7 @@ namespace SBoxDeathrun.Round
 		public bool ShouldEnd { get; set; }
 		public abstract RoundType RoundType { get; }
 		public abstract RoundType NextRound { get; }
-		public virtual bool PlayersFrozen => false;
+		public virtual bool PawnsFrozen => false;
 
 		protected Round()
 		{
@@ -23,13 +22,12 @@ namespace SBoxDeathrun.Round
 
 		public virtual void ClientJoined( Client client )
 		{
-			var dp = CreateDeadPlayer( client );
-			dp.Team = TeamType.SPECTATOR;
+			CreateFreeCameraPawn( client );
 		}
 
 		public void ClientKilled( Client client )
 		{
-			CreateDeadPlayer( client );
+			CreateFreeCameraPawn( client );
 		}
 
 		private static void CleanUpExistingPawn( Client client )
@@ -38,38 +36,22 @@ namespace SBoxDeathrun.Round
 				client.Pawn.Delete();
 		}
 
-		private static TeamType GetClientCurrentTeam( Client client )
+		protected static FreeCameraPawn CreateFreeCameraPawn( Client client )
 		{
-			if ( client.Pawn is TeamedPlayer tp )
-				return tp.Team;
-
-			return TeamType.SPECTATOR;
+			CleanUpExistingPawn( client );
+			var fcp = new FreeCameraPawn();
+			client.Pawn = fcp;
+			fcp.Respawn();
+			return fcp;
 		}
 
-		protected static DeadPlayer CreateDeadPlayer( Client client )
+		protected static PlayerPawn CreatePlayerPawn( Client client )
 		{
-			var currentTeamType = GetClientCurrentTeam( client );
 			CleanUpExistingPawn( client );
-
-			var dp = new DeadPlayer();
-			dp.Team = currentTeamType;
-
-			client.Pawn = dp;
-			dp.Respawn();
-			return dp;
-		}
-
-		protected static AlivePlayer CreateAlivePlayer( Client client )
-		{
-			var currentTeamType = GetClientCurrentTeam( client );
-			CleanUpExistingPawn( client );
-
-			var ap = new AlivePlayer();
-			ap.Team = currentTeamType;
-
-			client.Pawn = ap;
-			ap.Respawn();
-			return ap;
+			var pp = new PlayerPawn();
+			client.Pawn = pp;
+			pp.Respawn();
+			return pp;
 		}
 
 		public override string ToString() => $"Round[RoundType={RoundType}, NextRound={NextRound} ShouldEnd={ShouldEnd}, TL={TimeLimit} ]";
