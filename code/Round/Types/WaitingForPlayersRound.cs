@@ -1,4 +1,5 @@
 using Sandbox;
+using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Round.Types
 {
@@ -11,7 +12,10 @@ namespace SBoxDeathrun.Round.Types
 		public override void RoundStart()
 		{
 			foreach ( var client in Client.All )
+			{
+				DeathrunGame.Current.TeamManager.AddClientToTeam( client, TeamType.SPECTATOR );
 				CreateFreeCameraPawn( client );
+			}
 		}
 
 		public override void RoundEnd() { }

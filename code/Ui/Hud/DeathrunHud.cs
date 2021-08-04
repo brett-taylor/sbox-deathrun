@@ -9,6 +9,7 @@ namespace SBoxDeathrun.Ui.Hud
 		private readonly Label timeLeftLabel;
 		private readonly Label playerTypeLabel;
 		private readonly Label healthLabel;
+		private readonly Label lifeStateLabel;
 		private readonly Label teamLabel;
 		private readonly Label frozenLabel;
 
@@ -23,6 +24,7 @@ namespace SBoxDeathrun.Ui.Hud
 			timeLeftLabel = AddChild<Label>();
 			playerTypeLabel = AddChild<Label>();
 			healthLabel = AddChild<Label>();
+			lifeStateLabel = AddChild<Label>();
 			teamLabel = AddChild<Label>();
 			frozenLabel = AddChild<Label>();
 		}
@@ -39,8 +41,9 @@ namespace SBoxDeathrun.Ui.Hud
 				? $"Time Left: {(rm.RoundStartTime + currentRound.TimeLimit.Limit) - Time.Now}"
 				: "Time Left: Limitless";
 			playerTypeLabel.Text = $"Player Type: {Local.Pawn}";
+			lifeStateLabel.Text = $"LifeState: {Local.Pawn.LifeState}";
 			healthLabel.Text = $"Health: {Local.Pawn.Health}";
-			teamLabel.Text = $"Team: No team";
+			teamLabel.Text = $"Team: {DeathrunGame.Current.TeamManager.GetTeamForClient( Local.Client )}";
 			frozenLabel.Text = $"Frozen Round: {currentRound.PawnsFrozen}";
 		}
 	}

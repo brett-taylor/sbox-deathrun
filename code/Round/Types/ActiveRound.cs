@@ -1,4 +1,6 @@
+using System.Linq;
 using Sandbox;
+using SBoxDeathrun.Team;
 using SBoxDeathrun.Utils;
 
 namespace SBoxDeathrun.Round.Types
@@ -33,7 +35,18 @@ namespace SBoxDeathrun.Round.Types
 				ShouldEnd = true;
 		}
 
-		private static int NumberOfAliveRunners() => 5;
-		private static int NumberOfAliveDeaths() => 5;
+		private static int NumberOfAliveRunners()
+		{
+			return DeathrunGame.Current.TeamManager
+				.GetAllClientsInTeam( TeamType.RUNNER )
+				.Count( client => client.Pawn.LifeState == LifeState.Alive );
+		}
+
+		private static int NumberOfAliveDeaths()
+		{
+			return DeathrunGame.Current.TeamManager
+				.GetAllClientsInTeam( TeamType.DEATH )
+				.Count( client => client.Pawn.LifeState == LifeState.Alive );
+		}
 	}
 }

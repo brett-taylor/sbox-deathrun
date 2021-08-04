@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using SBoxDeathrun.Pawn.Controller;
 using SBoxDeathrun.Weapon;
+using SBoxDeathrun.Weapon.Types;
 
 namespace SBoxDeathrun.Pawn
 {

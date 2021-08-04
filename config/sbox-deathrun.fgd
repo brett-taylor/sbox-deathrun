@@ -1,5 +1,5 @@
 // 
-// SBoxDeathrun.Weapon.Pistol : SBoxDeathrun.Weapon.Weapon 
+// SBoxDeathrun.Weapon.Types.Pistol : SBoxDeathrun.Weapon.Weapon 
 // 
 @PointClass = weapon_pistol : ""
 [

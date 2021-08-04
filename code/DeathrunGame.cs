@@ -1,5 +1,6 @@
 ﻿using Sandbox;
 using SBoxDeathrun.Round;
+using SBoxDeathrun.Team;
 using SBoxDeathrun.Ui;
 
 namespace SBoxDeathrun
@@ -8,6 +9,7 @@ namespace SBoxDeathrun
 	{
 		public new static DeathrunGame Current => Game.Current as DeathrunGame;
 		[Net] public RoundManager RoundManager { get; private set; }
+		[Net] public TeamManager TeamManager { get; private set; }
 
 		public DeathrunGame()
 		{
@@ -15,6 +17,7 @@ namespace SBoxDeathrun
 				return;
 
 			RoundManager = new RoundManager();
+			TeamManager = new TeamManager();
 			var _ = new DeathrunHudEntity();
 		}
 
@@ -22,6 +25,12 @@ namespace SBoxDeathrun
 		{
 			base.ClientJoined( client );
 			RoundManager.Round.ClientJoined( client );
+		}
+
+		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
+		{
+			base.ClientDisconnect( client, reason );
+			TeamManager.ClientDisconnected( client );
 		}
 
 		[Event.Tick.ServerAttribute]

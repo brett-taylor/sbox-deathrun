@@ -1,4 +1,7 @@
+using System;
+using System.Linq;
 using Sandbox;
+using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Round.Types
 {
@@ -11,13 +14,18 @@ namespace SBoxDeathrun.Round.Types
 
 		public override void ClientJoined( Client client )
 		{
+			DeathrunGame.Current.TeamManager.AddClientToTeam( client, TeamType.RUNNER );
 			CreatePlayerPawn( client );
 		}
 
 		public override void RoundStart()
 		{
+			var chosenDeath = Client.All.OrderBy( _ => Guid.NewGuid() ).First();
 			foreach ( var client in Client.All )
+			{
+				DeathrunGame.Current.TeamManager.AddClientToTeam( client, client == chosenDeath ? TeamType.DEATH : TeamType.RUNNER );
 				CreatePlayerPawn( client );
+			}
 		}
 
 		public override void RoundEnd() { }

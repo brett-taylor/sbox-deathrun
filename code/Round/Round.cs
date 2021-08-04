@@ -1,5 +1,6 @@
 using Sandbox;
 using SBoxDeathrun.Pawn;
+using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Round
 {
@@ -22,22 +23,27 @@ namespace SBoxDeathrun.Round
 
 		public virtual void ClientJoined( Client client )
 		{
+			Host.AssertServer();
+			DeathrunGame.Current.TeamManager.AddClientToTeam( client, TeamType.SPECTATOR );
 			CreateFreeCameraPawn( client );
 		}
 
 		public void ClientKilled( Client client )
 		{
+			Host.AssertServer();
 			CreateFreeCameraPawn( client );
 		}
 
 		private static void CleanUpExistingPawn( Client client )
 		{
+			Host.AssertServer();
 			if ( client.Pawn.IsValid() )
 				client.Pawn.Delete();
 		}
 
 		protected static FreeCameraPawn CreateFreeCameraPawn( Client client )
 		{
+			Host.AssertServer();
 			CleanUpExistingPawn( client );
 			var fcp = new FreeCameraPawn();
 			client.Pawn = fcp;
@@ -47,6 +53,7 @@ namespace SBoxDeathrun.Round
 
 		protected static PlayerPawn CreatePlayerPawn( Client client )
 		{
+			Host.AssertServer();
 			CleanUpExistingPawn( client );
 			var pp = new PlayerPawn();
 			client.Pawn = pp;

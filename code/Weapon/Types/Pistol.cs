@@ -1,6 +1,6 @@
 ﻿using Sandbox;
 
-namespace SBoxDeathrun.Weapon
+namespace SBoxDeathrun.Weapon.Types
 {
 	[Library( "weapon_pistol", Title = "Pistol", Spawnable = true )]
 	public partial class Pistol : Weapon
