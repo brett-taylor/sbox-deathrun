@@ -1,5 +1,6 @@
 using Sandbox;
 using SBoxDeathrun.Player;
+using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Round
 {
@@ -9,6 +10,7 @@ namespace SBoxDeathrun.Round
 		public bool ShouldEnd { get; set; }
 		public abstract RoundType RoundType { get; }
 		public abstract RoundType NextRound { get; }
+		public virtual bool PlayersFrozen => false;
 
 		protected Round()
 		{
@@ -21,7 +23,13 @@ namespace SBoxDeathrun.Round
 
 		public virtual void ClientJoined( Client client )
 		{
-			CreateSpectatorPlayer( client );
+			var dp = CreateDeadPlayer( client );
+			dp.Team = TeamType.SPECTATOR;
+		}
+
+		public void ClientKilled( Client client )
+		{
+			CreateDeadPlayer( client );
 		}
 
 		private static void CleanUpExistingPawn( Client client )
@@ -30,25 +38,38 @@ namespace SBoxDeathrun.Round
 				client.Pawn.Delete();
 		}
 
-		protected static void CreateSpectatorPlayer( Client client )
+		private static TeamType GetClientCurrentTeam( Client client )
 		{
-			CleanUpExistingPawn( client );
-			var sp = new SpectatorPlayer();
-			client.Pawn = sp;
-			sp.Respawn();
+			if ( client.Pawn is TeamedPlayer tp )
+				return tp.Team;
+
+			return TeamType.SPECTATOR;
 		}
 
-		protected static void CreateDeathrunPlayer( Client client )
+		protected static DeadPlayer CreateDeadPlayer( Client client )
 		{
+			var currentTeamType = GetClientCurrentTeam( client );
 			CleanUpExistingPawn( client );
-			var dp = new DeathrunPlayer();
+
+			var dp = new DeadPlayer();
+			dp.Team = currentTeamType;
+
 			client.Pawn = dp;
 			dp.Respawn();
+			return dp;
 		}
 
-		public virtual void ClientKilled( Client client )
+		protected static AlivePlayer CreateAlivePlayer( Client client )
 		{
-			CreateSpectatorPlayer( client );
+			var currentTeamType = GetClientCurrentTeam( client );
+			CleanUpExistingPawn( client );
+
+			var ap = new AlivePlayer();
+			ap.Team = currentTeamType;
+
+			client.Pawn = ap;
+			ap.Respawn();
+			return ap;
 		}
 
 		public override string ToString() => $"Round[RoundType={RoundType}, NextRound={NextRound} ShouldEnd={ShouldEnd}, TL={TimeLimit} ]";

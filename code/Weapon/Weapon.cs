@@ -6,13 +6,9 @@ namespace SBoxDeathrun.Weapon
 	public partial class Weapon : BaseWeapon, IUse
 	{
 		public virtual float ReloadTime => 3.0f;
-
 		public PickupTrigger PickupTrigger { get; protected set; }
-
 		[Net, Predicted] public TimeSince TimeSinceReload { get; set; }
-
 		[Net, Predicted] public bool IsReloading { get; set; }
-
 		[Net, Predicted] public TimeSince TimeSinceDeployed { get; set; }
 
 		public override void Spawn()
@@ -149,8 +145,18 @@ namespace SBoxDeathrun.Weapon
 			var pos = Owner.EyePos;
 			var dir = Owner.EyeRot.Forward;
 
-			for ( int i = 0; i < numBullets; i++ )
+			for ( var i = 0; i < numBullets; i++ )
 				ShootBullet( pos, dir, spread, force / numBullets, damage, bulletSize );
+		}
+
+		public override bool CanPrimaryAttack()
+		{
+			return base.CanPrimaryAttack() && DeathrunGame.Current.RoundManager.Round.PlayersFrozen == false;
+		}
+
+		public override bool CanSecondaryAttack()
+		{
+			return base.CanSecondaryAttack() && DeathrunGame.Current.RoundManager.Round.PlayersFrozen == false;
 		}
 	}
 }

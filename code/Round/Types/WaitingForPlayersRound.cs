@@ -1,4 +1,5 @@
 using Sandbox;
+using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Round.Types
 {
@@ -8,15 +9,13 @@ namespace SBoxDeathrun.Round.Types
 		public override RoundType RoundType => RoundType.WAITING_FOR_PLAYERS;
 		public override RoundType NextRound => RoundType.PREPARE;
 
-		public override void ClientJoined( Client client )
-		{
-			CreateSpectatorPlayer( client );
-		}
-
 		public override void RoundStart()
 		{
 			foreach ( var client in Client.All )
-				CreateSpectatorPlayer( client );
+			{
+				var dp = CreateDeadPlayer( client );
+				dp.Team = TeamType.SPECTATOR;
+			}
 		}
 
 		public override void RoundEnd() { }

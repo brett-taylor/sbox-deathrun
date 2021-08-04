@@ -1,5 +1,7 @@
 using Sandbox;
 using Sandbox.UI;
+using SBoxDeathrun.Player;
+using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Ui.Hud
 {
@@ -9,6 +11,8 @@ namespace SBoxDeathrun.Ui.Hud
 		private readonly Label timeLeftLabel;
 		private readonly Label playerTypeLabel;
 		private readonly Label healthLabel;
+		private readonly Label teamLabel;
+		private readonly Label frozenLabel;
 
 		public DeathrunHud()
 		{
@@ -21,6 +25,8 @@ namespace SBoxDeathrun.Ui.Hud
 			timeLeftLabel = AddChild<Label>();
 			playerTypeLabel = AddChild<Label>();
 			healthLabel = AddChild<Label>();
+			teamLabel = AddChild<Label>();
+			frozenLabel = AddChild<Label>();
 		}
 
 		public override void Tick()
@@ -36,6 +42,8 @@ namespace SBoxDeathrun.Ui.Hud
 				: "Time Left: Limitless";
 			playerTypeLabel.Text = $"Player Type: {Local.Pawn}";
 			healthLabel.Text = $"Health: {Local.Pawn.Health}";
+			teamLabel.Text = $"Team: {(Local.Pawn as TeamedPlayer).Team.NiceName()}";
+			frozenLabel.Text = $"Frozen Round: {currentRound.PlayersFrozen}";
 		}
 	}
 }

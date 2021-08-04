@@ -41,7 +41,7 @@ namespace SBoxDeathrun.Weapon
 
 			var playerVelocity = Local.Pawn.Velocity;
 
-			if ( Local.Pawn is DeathrunPlayer player )
+			if ( Local.Pawn is AlivePlayer player )
 			{
 				var controller = player.GetActiveController();
 				if ( controller != null && controller.HasTag( "noclip" ) )

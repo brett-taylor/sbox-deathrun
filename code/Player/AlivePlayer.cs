@@ -1,11 +1,12 @@
 ﻿using Sandbox;
+using SBoxDeathrun.Player.Controller;
 using SBoxDeathrun.Weapon;
 
 namespace SBoxDeathrun.Player
 {
-	public class DeathrunPlayer : Sandbox.Player
+	public class AlivePlayer : TeamedPlayer
 	{
-		public DeathrunPlayer()
+		public AlivePlayer()
 		{
 			Inventory = new Inventory( this );
 		}
@@ -13,7 +14,7 @@ namespace SBoxDeathrun.Player
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
-			Controller = new WalkController();
+			Controller = new AlivePlayerController();
 			Animator = new StandardPlayerAnimator();
 			Camera = new ThirdPersonCamera();
 
@@ -36,6 +37,7 @@ namespace SBoxDeathrun.Player
 
 			var controller = GetActiveController();
 			controller?.Simulate( cl, this, GetActiveAnimator() );
+
 			SimulateActiveChild( cl, ActiveChild );
 
 			if ( Input.Pressed( InputButton.View ) )
@@ -48,5 +50,7 @@ namespace SBoxDeathrun.Player
 			EnableDrawing = false;
 			EnableAllCollisions = false;
 		}
+
+		public bool IsInFirstPerson() => Camera is FirstPersonCamera;
 	}
 }

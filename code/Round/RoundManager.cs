@@ -16,9 +16,11 @@ namespace SBoxDeathrun.Round
 
 		public void Update()
 		{
+			Host.AssertServer();
+
 			if ( Round is null )
 				return;
-			
+
 			if ( CurrentRoundType != RoundType.WAITING_FOR_PLAYERS && Client.All.Count < RoundConfig.MINIMUM_PLAYERS )
 			{
 				ChangeRounds( RoundType.WAITING_FOR_PLAYERS );
@@ -36,6 +38,8 @@ namespace SBoxDeathrun.Round
 
 		private void ChangeRounds( RoundType newRoundType )
 		{
+			Host.AssertServer();
+
 			if ( Round is not null )
 				Round.RoundEnd();
 
