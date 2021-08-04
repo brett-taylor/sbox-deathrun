@@ -15,9 +15,9 @@ namespace SBoxDeathrun.Team
 		{
 			return type switch
 			{
-				TeamType.SPECTATOR => "Spectator",
-				TeamType.DEATH => "Death",
-				TeamType.RUNNER => "Runner",
+				TeamType.SPECTATOR => "Spectators",
+				TeamType.DEATH => "Deaths",
+				TeamType.RUNNER => "Runners",
 				_ => throw new ArgumentOutOfRangeException( nameof(type), type, null )
 			};
 		}

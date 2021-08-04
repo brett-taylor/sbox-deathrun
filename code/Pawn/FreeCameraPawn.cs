@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Sandbox;
+﻿using Sandbox;
 using SBoxDeathrun.Pawn.Camera;
 
 namespace SBoxDeathrun.Pawn
@@ -10,12 +8,6 @@ namespace SBoxDeathrun.Pawn
 		public override void Respawn()
 		{
 			var sc = new FreeCamera();
-			var spawnPoint = All
-				.OfType<SpawnPoint>()
-				.OrderBy( _ => Guid.NewGuid() )
-				.FirstOrDefault();
-
-			sc.TargetPos = spawnPoint.Position;
 			Camera = sc;
 
 			EnableAllCollisions = false;
@@ -23,6 +15,8 @@ namespace SBoxDeathrun.Pawn
 
 			base.Respawn();
 			LifeState = LifeState.Dead;
+
+			sc.TargetPos = Position;
 		}
 
 		public override void Simulate( Client cl )

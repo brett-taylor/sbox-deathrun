@@ -1,12 +1,34 @@
 // 
 // SBoxDeathrun.Weapon.Types.Pistol : SBoxDeathrun.Weapon.Weapon 
 // 
-@PointClass = weapon_pistol : ""
+@PointClass = deathrun_sbox_weapon_pistol : ""
 [
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
 	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+]
+
+// 
+// SBoxDeathrun.Entities.DeathrunSpawnPoint : Sandbox.Entity 
+// 
+@PointClass editormodel( "models/editor/playerstart.vmdl" ) 
+metadata
+{
+	entity_tool_name = "Deathrun Player Spawnpoint"
+	entity_tool_group = "Deathrun Sbox"
+	entity_tool_tip = "Defines a point where the player can (re)spawn"
+}
+= deathrun_sbox_spawn_point : ""
+[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	team(choices) : "The team this spawn point is for" : 0 : "" = [
+		0 : "SPECTATOR"
+		1 : "DEATH"
+		2 : "RUNNER"
+	]
+	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 ]
 

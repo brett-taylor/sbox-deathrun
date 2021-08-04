@@ -1,5 +1,6 @@
 using Sandbox;
 using Sandbox.UI;
+using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Ui.Hud
 {
@@ -43,7 +44,7 @@ namespace SBoxDeathrun.Ui.Hud
 			playerTypeLabel.Text = $"Player Type: {Local.Pawn}";
 			lifeStateLabel.Text = $"LifeState: {Local.Pawn.LifeState}";
 			healthLabel.Text = $"Health: {Local.Pawn.Health}";
-			teamLabel.Text = $"Team: {DeathrunGame.Current.TeamManager.GetTeamForClient( Local.Client )}";
+			teamLabel.Text = $"Team: {DeathrunGame.Current.TeamManager.GetTeamForClient( Local.Client ).NiceName()}";
 			frozenLabel.Text = $"Frozen Round: {currentRound.PawnsFrozen}";
 		}
 	}

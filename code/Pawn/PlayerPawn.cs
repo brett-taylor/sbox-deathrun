@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using SBoxDeathrun.Entities;
 using SBoxDeathrun.Pawn.Controller;
 using SBoxDeathrun.Weapon;
 using SBoxDeathrun.Weapon.Types;
@@ -17,6 +18,7 @@ namespace SBoxDeathrun.Pawn
 			SetModel( "models/citizen/citizen.vmdl" );
 			Controller = new PlayerPawnController();
 			Animator = new StandardPlayerAnimator();
+
 			Camera = new ThirdPersonCamera();
 
 			EnableAllCollisions = true;
@@ -29,6 +31,11 @@ namespace SBoxDeathrun.Pawn
 			Inventory.SetActive( pistol );
 
 			base.Respawn();
+
+			var team = DeathrunGame.Current.TeamManager.GetTeamForClient( GetClientOwner() );
+			var randomSpawnPoint = DeathrunSpawnPoint.SpawnPointForTeam( team );
+			Position = randomSpawnPoint.Position;
+			Rotation = randomSpawnPoint.Rotation;
 		}
 
 		public override void Simulate( Client cl )
@@ -42,7 +49,7 @@ namespace SBoxDeathrun.Pawn
 			SimulateActiveChild( cl, ActiveChild );
 
 			if ( Input.Pressed( InputButton.View ) )
-				Camera = Camera is not FirstPersonCamera ? new FirstPersonCamera() : new ThirdPersonCamera();
+				Camera = Camera is ThirdPersonCamera ? new FirstPersonCamera() : new ThirdPersonCamera();
 		}
 
 		public override void OnKilled()
@@ -51,7 +58,5 @@ namespace SBoxDeathrun.Pawn
 			EnableDrawing = false;
 			EnableAllCollisions = false;
 		}
-
-		public bool IsInFirstPerson() => Camera is FirstPersonCamera;
 	}
 }

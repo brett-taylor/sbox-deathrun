@@ -21,6 +21,8 @@ namespace SBoxDeathrun.Round.Types
 		public override void RoundStart()
 		{
 			var chosenDeath = Client.All.OrderBy( _ => Guid.NewGuid() ).First();
+			Log.Info( $"Deaths chosen: {chosenDeath.Name}, had {Client.All.Count} options." );
+
 			foreach ( var client in Client.All )
 			{
 				DeathrunGame.Current.TeamManager.AddClientToTeam( client, client == chosenDeath ? TeamType.DEATH : TeamType.RUNNER );

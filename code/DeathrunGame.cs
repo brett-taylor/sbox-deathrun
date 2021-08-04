@@ -1,4 +1,6 @@
-﻿using Sandbox;
+﻿using System.Linq;
+using Sandbox;
+using SBoxDeathrun.Entities;
 using SBoxDeathrun.Round;
 using SBoxDeathrun.Team;
 using SBoxDeathrun.Ui;
@@ -50,6 +52,11 @@ namespace SBoxDeathrun
 		{
 			base.OnKilled( client, pawn );
 			RoundManager.Round.ClientKilled( client );
+		}
+
+		public override void MoveToSpawnpoint( Entity pawn )
+		{
+			pawn.Transform = DeathrunSpawnPoint.Random().Transform;
 		}
 	}
 }
