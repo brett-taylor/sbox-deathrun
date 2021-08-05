@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Sandbox;
+﻿using Sandbox;
 using SBoxDeathrun.Entities;
 using SBoxDeathrun.Round;
 using SBoxDeathrun.Team;
 using SBoxDeathrun.Ui;
+using SBoxDeathrun.Utils;
 
 namespace SBoxDeathrun
 {
@@ -57,6 +57,12 @@ namespace SBoxDeathrun
 		public override void MoveToSpawnpoint( Entity pawn )
 		{
 			pawn.Transform = DeathrunSpawnPoint.Random().Transform;
+		}
+
+		[Event( DeathrunEvents.ROUND_ACTIVE_COMPLETED )]
+		private void OnActiveRoundCompleted( ActiveRoundOutcome outcome )
+		{
+			Log.Warning( $"{Host.Name} DeathrunGame::OnActiveRoundCompleted called {outcome}" );
 		}
 	}
 }

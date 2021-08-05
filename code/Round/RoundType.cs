@@ -13,7 +13,7 @@ namespace SBoxDeathrun.Round
 
 	public static class RoundTypeExtensions
 	{
-		public static Round ToRound( this RoundType type )
+		public static BaseRound ToRound( this RoundType type )
 		{
 			return type switch
 			{

@@ -1,11 +1,12 @@
 using Sandbox;
 using SBoxDeathrun.Round.Types;
+using SBoxDeathrun.Utils;
 
 namespace SBoxDeathrun.Round
 {
 	public partial class RoundManager : NetworkComponent
 	{
-		public Round Round { get; private set; }
+		public BaseRound Round { get; private set; }
 		[Net] public float RoundStartTime { get; private set; }
 		[Net, OnChangedCallback] public RoundType CurrentRoundType { get; private set; }
 
@@ -41,13 +42,17 @@ namespace SBoxDeathrun.Round
 			Host.AssertServer();
 
 			if ( Round is not null )
+			{
 				Round.RoundEnd();
+				Event.Run(DeathrunEvents.ROUND_COMPLETED);
+			}
 
 			var newRound = newRoundType.ToRound();
 			RoundStartTime = Time.Now;
 			newRound.RoundStart();
 			Round = newRound;
 			CurrentRoundType = newRoundType;
+			Event.Run(DeathrunEvents.ROUND_STARTED);
 		}
 
 		public void OnCurrentRoundTypeChanged()

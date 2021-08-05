@@ -12,7 +12,13 @@ namespace SBoxDeathrun.Entities
 	public class DeathrunSpawnPoint : Entity
 	{
 		[Property( Title = "The team this spawn point is for" )]
-		public TeamType Team { get; private set; }
+		public TeamType Team { get; private set; } = TeamType.SPECTATOR;
+
+		public override void Spawn()
+		{
+			if ( Team == TeamType.SPECTATOR )
+				throw new Exception( $"DeathrunSpawnPoint has Team Spectator Spawn. Did you forget to set it?" );
+		}
 
 		public static DeathrunSpawnPoint Random()
 		{

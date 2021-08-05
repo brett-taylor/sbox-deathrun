@@ -4,11 +4,6 @@ namespace SBoxDeathrun.Pawn.Controller
 {
 	public class PlayerPawnController : WalkController
 	{
-		public PlayerPawnController()
-		{
-			AutoJump = true;
-		}
-
 		public override void Simulate()
 		{
 			if ( DeathrunGame.Current.RoundManager.Round.PawnsFrozen )

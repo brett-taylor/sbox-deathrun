@@ -3,7 +3,7 @@ using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Round.Types
 {
-	public class WaitingForPlayersRound : Round
+	public class WaitingForPlayersRound : BaseRound
 	{
 		public override RoundTimeLimit TimeLimit => RoundTimeLimit.NoLimit();
 		public override RoundType RoundType => RoundType.WAITING_FOR_PLAYERS;

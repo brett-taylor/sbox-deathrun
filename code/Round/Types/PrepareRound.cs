@@ -5,7 +5,7 @@ using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Round.Types
 {
-	public class PrepareRound : Round
+	public class PrepareRound : BaseRound
 	{
 		public override RoundTimeLimit TimeLimit => RoundTimeLimit.WithLimit( GameConfig.PREPARE_ROUND_LENGTH );
 		public override RoundType RoundType => RoundType.PREPARE;

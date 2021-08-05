@@ -1,6 +1,6 @@
 namespace SBoxDeathrun.Round
 {
-	public enum RoundSuccessOutcome
+	public enum ActiveRoundOutcome
 	{
 		RUNNERS_WIN,
 		DEATHS_WIN,

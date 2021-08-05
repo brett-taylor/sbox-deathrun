@@ -5,7 +5,7 @@ using SBoxDeathrun.Utils;
 
 namespace SBoxDeathrun.Round.Types
 {
-	public class ActiveRound : Round
+	public class ActiveRound : BaseRound
 	{
 		public override RoundTimeLimit TimeLimit => RoundTimeLimit.WithLimit( GameConfig.ACTIVE_ROUND_LENGTH );
 		public override RoundType RoundType => RoundType.ACTIVE;
@@ -20,13 +20,13 @@ namespace SBoxDeathrun.Round.Types
 
 			var outcome = (numberOfAliveRunners > 0, numberOfAliveDeaths > 0) switch
 			{
-				(false, false) => RoundSuccessOutcome.TIED, // Both teams had 0 pawns alive (Everyone left?)
-				(true, true) => RoundSuccessOutcome.TIED, // Both teams had X pawns alive (Ran out of time?)
-				(true, false) => RoundSuccessOutcome.RUNNERS_WIN, // Runners had someone alive while Deaths did not
-				(false, true) => RoundSuccessOutcome.DEATHS_WIN, // Deaths had someone alive while Runners did not
+				(false, false) => ActiveRoundOutcome.TIED, // Both teams had 0 pawns alive (Everyone left?)
+				(true, true) => ActiveRoundOutcome.TIED, // Both teams had X pawns alive (Ran out of time?)
+				(true, false) => ActiveRoundOutcome.RUNNERS_WIN, // Runners had someone alive while Deaths did not
+				(false, true) => ActiveRoundOutcome.DEATHS_WIN, // Deaths had someone alive while Runners did not
 			};
 
-			Event.Run( DeathrunEvents.ActiveRoundCompleted, outcome );
+			Event.Run( DeathrunEvents.ROUND_ACTIVE_COMPLETED, outcome );
 		}
 
 		public override void RoundUpdate()

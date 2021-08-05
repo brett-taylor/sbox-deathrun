@@ -13,6 +13,7 @@ namespace SBoxDeathrun.Ui.Hud
 		private readonly Label lifeStateLabel;
 		private readonly Label teamLabel;
 		private readonly Label frozenLabel;
+		private readonly Label velocityLabel;
 
 		public DeathrunHud()
 		{
@@ -28,6 +29,7 @@ namespace SBoxDeathrun.Ui.Hud
 			lifeStateLabel = AddChild<Label>();
 			teamLabel = AddChild<Label>();
 			frozenLabel = AddChild<Label>();
+			velocityLabel = AddChild<Label>();
 		}
 
 		public override void Tick()
@@ -46,6 +48,7 @@ namespace SBoxDeathrun.Ui.Hud
 			healthLabel.Text = $"Health: {Local.Pawn.Health}";
 			teamLabel.Text = $"Team: {DeathrunGame.Current.TeamManager.GetTeamForClient( Local.Client ).NiceName()}";
 			frozenLabel.Text = $"Frozen Round: {currentRound.PawnsFrozen}";
+			velocityLabel.Text = $"Frozen Round: {Local.Pawn.Velocity.Length}";
 		}
 	}
 }

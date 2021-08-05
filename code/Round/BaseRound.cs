@@ -4,7 +4,7 @@ using SBoxDeathrun.Team;
 
 namespace SBoxDeathrun.Round
 {
-	public abstract class Round
+	public abstract class BaseRound
 	{
 		public abstract RoundTimeLimit TimeLimit { get; }
 		public bool ShouldEnd { get; set; }
@@ -12,13 +12,15 @@ namespace SBoxDeathrun.Round
 		public abstract RoundType NextRound { get; }
 		public virtual bool PawnsFrozen => false;
 
-		protected Round()
+		protected BaseRound()
 		{
 			ShouldEnd = false;
 		}
 
 		public abstract void RoundStart();
+
 		public abstract void RoundEnd();
+
 		public abstract void RoundUpdate();
 
 		public virtual void ClientJoined( Client client )

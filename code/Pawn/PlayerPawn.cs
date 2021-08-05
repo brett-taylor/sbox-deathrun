@@ -8,6 +8,12 @@ namespace SBoxDeathrun.Pawn
 {
 	public class PlayerPawn : BasePawn
 	{
+		public new PlayerPawnController Controller
+		{
+			get => base.Controller as PlayerPawnController;
+			set => base.Controller = value;
+		}
+
 		public PlayerPawn()
 		{
 			Inventory = new Inventory( this );
