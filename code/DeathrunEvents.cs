@@ -9,7 +9,7 @@ namespace SBoxDeathrun.Utils
 		public const string ROUND_PREPARE_STARTED = "deathrun.round.prepare.started"; // No Params,
 		public const string ROUND_PREPARE_COMPLETED = "deathrun.round.prepare.completed"; // No Params
 		public const string ROUND_ACTIVE_STARTED = "deathrun.round.active.started"; // No Params,
-		public const string ROUND_ACTIVE_COMPLETED = "deathrun.round.active.completed"; // param1: ActiveRoundOutcome
+		public const string ROUND_ACTIVE_COMPLETED = "deathrun.round.active.completed"; // No Params,
 		public const string ROUND_POST_STARTED = "deathrun.round.post.started"; // No Params,
 		public const string ROUND_POST_COMPLETED = "deathrun.round.post.completed"; // No Params
 
