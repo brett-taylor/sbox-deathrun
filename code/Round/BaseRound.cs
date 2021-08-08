@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Sandbox;
 using SBoxDeathrun.Pawn;
 using SBoxDeathrun.Team;
@@ -43,6 +42,7 @@ namespace SBoxDeathrun.Round
 		private static void CleanUpExistingPawn( Client client )
 		{
 			Host.AssertServer();
+
 			if ( client.Pawn.IsValid() )
 				client.Pawn.Delete();
 		}
@@ -50,10 +50,16 @@ namespace SBoxDeathrun.Round
 		protected static FreeCameraPawn CreateFreeCameraPawn( Client client )
 		{
 			Host.AssertServer();
+
+			Entity ragdoll = null;
+			if ( client.Pawn is PlayerPawn pp )
+				ragdoll = pp.Corpse;
+
 			CleanUpExistingPawn( client );
 			var fcp = new FreeCameraPawn();
 			client.Pawn = fcp;
-			fcp.Respawn();
+			fcp.Respawn( ragdoll );
+
 			return fcp;
 		}
 

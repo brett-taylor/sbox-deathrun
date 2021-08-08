@@ -88,5 +88,11 @@ namespace SBoxDeathrun.Round
 
 			LastActiveRoundOutcome = outcome;
 		}
+
+		[ServerCmd( "dr_end_round" )]
+		public static void EndRound()
+		{
+			DeathrunGame.Current.RoundManager.ChangeRounds(DeathrunGame.Current.RoundManager.Round.NextRound);
+		}
 	}
 }

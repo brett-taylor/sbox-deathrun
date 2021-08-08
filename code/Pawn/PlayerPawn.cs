@@ -6,8 +6,10 @@ using SBoxDeathrun.Weapon.Types;
 
 namespace SBoxDeathrun.Pawn
 {
-	public class PlayerPawn : BasePawn
+	public partial class PlayerPawn : BasePawn
 	{
+		private DamageInfo LastDamage { get; set; }
+
 		public new PlayerPawnController Controller
 		{
 			get => base.Controller as PlayerPawnController;
@@ -60,9 +62,16 @@ namespace SBoxDeathrun.Pawn
 
 		public override void OnKilled()
 		{
+			CreateRagdoll( Velocity, LastDamage.Flags, LastDamage.Position, LastDamage.Force, GetHitboxBone( LastDamage.HitboxIndex ) );
 			base.OnKilled();
+
 			EnableDrawing = false;
 			EnableAllCollisions = false;
+		}
+
+		protected override void TakeActualDamage( DamageInfo info )
+		{
+			LastDamage = info;
 		}
 	}
 }
