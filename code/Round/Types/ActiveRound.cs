@@ -9,7 +9,9 @@ namespace SBoxDeathrun.Round.Types
 	{
 		public override RoundTimeLimit TimeLimit => RoundTimeLimit.WithLimit( GameConfig.ACTIVE_ROUND_LENGTH );
 		public override RoundType RoundType => RoundType.ACTIVE;
-		public override RoundType NextRound => RoundType.FINISH;
+		public override RoundType NextRound => RoundType.POST;
+		public override string RoundStartEventName => DeathrunEvents.ROUND_ACTIVE_STARTED;
+		public override string RoundCompletedEventName => DeathrunEvents.ROUND_ACTIVE_COMPLETED;
 
 		public override void RoundStart() { }
 
@@ -26,13 +28,12 @@ namespace SBoxDeathrun.Round.Types
 				(false, true) => ActiveRoundOutcome.DEATHS_WIN, // Deaths had someone alive while Runners did not
 			};
 
-			Event.Run( DeathrunEvents.ROUND_ACTIVE_COMPLETED, outcome );
+			DeathrunGame.Current.RoundManager.SetLastActiveRoundOutcome( outcome );
 		}
 
 		public override void RoundUpdate()
 		{
-			if ( NumberOfAliveRunners() == 0 || NumberOfAliveDeaths() == 0 )
-				ShouldEnd = true;
+			ShouldEnd = NumberOfAliveRunners() == 0 || NumberOfAliveDeaths() == 0;
 		}
 
 		private static int NumberOfAliveRunners()

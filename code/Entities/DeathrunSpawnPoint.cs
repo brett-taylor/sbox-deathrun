@@ -3,6 +3,7 @@ using System.Linq;
 using Hammer;
 using Sandbox;
 using SBoxDeathrun.Team;
+using SBoxDeathrun.Utils.Helpers;
 
 namespace SBoxDeathrun.Entities
 {
@@ -24,11 +25,7 @@ namespace SBoxDeathrun.Entities
 		{
 			Host.AssertServer();
 
-			var sp = All
-				.OfType<DeathrunSpawnPoint>()
-				.OrderBy( _ => Guid.NewGuid() )
-				.First();
-
+			var sp = IEnumerableHelpers.Random( All.OfType<DeathrunSpawnPoint>() );
 			if ( sp.IsValid() == false )
 				throw new Exception( $"No DeathrunSpawnPoint found" );
 
@@ -39,11 +36,10 @@ namespace SBoxDeathrun.Entities
 		{
 			Host.AssertServer();
 
-			var sp = All
+			var sp = IEnumerableHelpers.Random( All
 				.OfType<DeathrunSpawnPoint>()
 				.Where( dsp => dsp.Team == team )
-				.OrderBy( _ => Guid.NewGuid() )
-				.First();
+			);
 
 			if ( sp.IsValid() == false )
 				throw new Exception( $"No DeathrunSpawnPoint for {team.NiceName()} found." );

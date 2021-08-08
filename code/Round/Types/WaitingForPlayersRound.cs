@@ -1,5 +1,6 @@
 using Sandbox;
 using SBoxDeathrun.Team;
+using SBoxDeathrun.Utils;
 
 namespace SBoxDeathrun.Round.Types
 {
@@ -8,6 +9,8 @@ namespace SBoxDeathrun.Round.Types
 		public override RoundTimeLimit TimeLimit => RoundTimeLimit.NoLimit();
 		public override RoundType RoundType => RoundType.WAITING_FOR_PLAYERS;
 		public override RoundType NextRound => RoundType.PREPARE;
+		public override string RoundStartEventName => DeathrunEvents.ROUND_WAITING_FOR_PLAYERS_STARTED;
+		public override string RoundCompletedEventName => DeathrunEvents.ROUND_WAITING_FOR_PLAYERS_COMPLETED;
 
 		public override void RoundStart()
 		{
@@ -22,8 +25,7 @@ namespace SBoxDeathrun.Round.Types
 
 		public override void RoundUpdate()
 		{
-			if ( Client.All.Count >= GameConfig.MINIMUM_PLAYERS )
-				ShouldEnd = true;
+			ShouldEnd = Client.All.Count >= GameConfig.MINIMUM_PLAYERS;
 		}
 	}
 }

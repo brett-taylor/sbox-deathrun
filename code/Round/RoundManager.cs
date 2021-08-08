@@ -1,17 +1,20 @@
+using System;
 using Sandbox;
 using SBoxDeathrun.Round.Types;
 using SBoxDeathrun.Utils;
 
 namespace SBoxDeathrun.Round
 {
-	public partial class RoundManager : NetworkComponent
+	public partial class RoundManager : Entity
 	{
 		public BaseRound Round { get; private set; }
 		[Net] public float RoundStartTime { get; private set; }
 		[Net, OnChangedCallback] public RoundType CurrentRoundType { get; private set; }
+		[Net] public ActiveRoundOutcome LastActiveRoundOutcome { get; private set; }
 
 		public RoundManager()
 		{
+			Transmit = TransmitType.Always;
 			Round = new WaitingForPlayersRound();
 		}
 
@@ -44,7 +47,7 @@ namespace SBoxDeathrun.Round
 			if ( Round is not null )
 			{
 				Round.RoundEnd();
-				Event.Run(DeathrunEvents.ROUND_COMPLETED);
+				RunRoundEvent( DeathrunEvents.ROUND_ANY_COMPLETED, Round.RoundCompletedEventName );
 			}
 
 			var newRound = newRoundType.ToRound();
@@ -52,12 +55,38 @@ namespace SBoxDeathrun.Round
 			newRound.RoundStart();
 			Round = newRound;
 			CurrentRoundType = newRoundType;
-			Event.Run(DeathrunEvents.ROUND_STARTED);
+
+			RunRoundEvent( DeathrunEvents.ROUND_ANY_STARTED, Round.RoundStartEventName );
 		}
 
 		public void OnCurrentRoundTypeChanged()
 		{
 			Round = CurrentRoundType.ToRound();
+		}
+
+		private void RunRoundEvent( string generalRoundEventName, string eventName )
+		{
+			Event.Run( generalRoundEventName );
+			RunRoundEventOnClient( generalRoundEventName );
+
+			Event.Run( eventName );
+			RunRoundEventOnClient( eventName );
+		}
+
+		[ClientRpc]
+		private void RunRoundEventOnClient( string eventName )
+		{
+			Event.Run( eventName );
+		}
+
+		internal void SetLastActiveRoundOutcome( ActiveRoundOutcome outcome )
+		{
+			Host.AssertServer();
+
+			if ( CurrentRoundType != RoundType.ACTIVE )
+				throw new Exception( "SetLastActiveRoundOutcome invoked outside Active round type" );
+
+			LastActiveRoundOutcome = outcome;
 		}
 	}
 }

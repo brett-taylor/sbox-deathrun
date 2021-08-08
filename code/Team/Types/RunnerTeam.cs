@@ -10,6 +10,7 @@ namespace SBoxDeathrun.Team
 
 		protected override void PlayerSpawned( Client client, PlayerPawn pawn )
 		{
+			pawn.Controller.AutoJump = true;
 			pawn.Controller.SprintSpeed = GameConfig.DEATH_SPRINT_SPEED;
 			pawn.Controller.WalkSpeed = GameConfig.DEATH_WALK_SPEED;
 			pawn.Controller.DefaultSpeed = GameConfig.DEATH_DEFAULT_SPEED;

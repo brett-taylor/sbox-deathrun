@@ -3,13 +3,13 @@ using SBoxDeathrun.Entities;
 using SBoxDeathrun.Round;
 using SBoxDeathrun.Team;
 using SBoxDeathrun.Ui;
-using SBoxDeathrun.Utils;
 
 namespace SBoxDeathrun
 {
 	public partial class DeathrunGame : Game
 	{
 		public new static DeathrunGame Current => Game.Current as DeathrunGame;
+		[Net] public Entity DeathEntity { get; private set; }
 		[Net] public RoundManager RoundManager { get; private set; }
 		[Net] public TeamManager TeamManager { get; private set; }
 
@@ -21,6 +21,9 @@ namespace SBoxDeathrun
 			RoundManager = new RoundManager();
 			TeamManager = new TeamManager();
 			var _ = new DeathrunHudEntity();
+
+			DeathEntity = new Entity();
+			DeathEntity.EntityName = "Death";
 		}
 
 		public override void ClientJoined( Client client )
@@ -42,11 +45,17 @@ namespace SBoxDeathrun
 				RoundManager.Update();
 		}
 
-		public override void DoPlayerSuicide( Client cl ) { }
-
 		public override void DoPlayerNoclip( Client player ) { }
 
 		public override void DoPlayerDevCam( Client player ) { }
+
+		public override void DoPlayerSuicide( Client cl )
+		{
+			if ( TeamManager.GetTeamForClient( cl ) != TeamType.RUNNER )
+				return;
+
+			base.DoPlayerSuicide( cl );
+		}
 
 		public override void OnKilled( Client client, Entity pawn )
 		{
@@ -57,12 +66,6 @@ namespace SBoxDeathrun
 		public override void MoveToSpawnpoint( Entity pawn )
 		{
 			pawn.Transform = DeathrunSpawnPoint.Random().Transform;
-		}
-
-		[Event( DeathrunEvents.ROUND_ACTIVE_COMPLETED )]
-		private void OnActiveRoundCompleted( ActiveRoundOutcome outcome )
-		{
-			Log.Warning( $"{Host.Name} DeathrunGame::OnActiveRoundCompleted called {outcome}" );
 		}
 	}
 }

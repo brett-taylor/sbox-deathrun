@@ -8,7 +8,7 @@ namespace SBoxDeathrun.Round
 		WAITING_FOR_PLAYERS,
 		ACTIVE,
 		PREPARE,
-		FINISH,
+		POST,
 	}
 
 	public static class RoundTypeExtensions
@@ -20,7 +20,7 @@ namespace SBoxDeathrun.Round
 				RoundType.WAITING_FOR_PLAYERS => new WaitingForPlayersRound(),
 				RoundType.ACTIVE => new ActiveRound(),
 				RoundType.PREPARE => new PrepareRound(),
-				RoundType.FINISH => new FinishRound(),
+				RoundType.POST => new PostRound(),
 				_ => throw new ArgumentOutOfRangeException( nameof(type), type, null )
 			};
 		}

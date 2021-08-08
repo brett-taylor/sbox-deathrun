@@ -11,7 +11,7 @@ namespace SBoxDeathrun.Ui
 			if ( Host.IsClient == false )
 				return;
 
-			RootPanel.AddChild<DeathrunHud>();
+			RootPanel.AddChild<RoundHud>();
 			RootPanel.AddChild<NameTags>();
 			RootPanel.AddChild<ChatBox>();
 			RootPanel.AddChild<VoiceList>();

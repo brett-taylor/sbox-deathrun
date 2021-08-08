@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sandbox;
 using SBoxDeathrun.Pawn;
 using SBoxDeathrun.Team;
@@ -11,6 +12,9 @@ namespace SBoxDeathrun.Round
 		public abstract RoundType RoundType { get; }
 		public abstract RoundType NextRound { get; }
 		public virtual bool PawnsFrozen => false;
+
+		public abstract string RoundStartEventName { get; }
+		public abstract string RoundCompletedEventName { get; }
 
 		protected BaseRound()
 		{
