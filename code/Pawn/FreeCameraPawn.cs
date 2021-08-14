@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using SBoxDeathrun.Entities;
 using SBoxDeathrun.Pawn.Camera;
 
 namespace SBoxDeathrun.Pawn
@@ -6,9 +7,17 @@ namespace SBoxDeathrun.Pawn
 	public partial class FreeCameraPawn : BasePawn
 	{
 		[Net] private Entity RagdollCameraFocusEntity { get; set; }
+		public Vector3 LastCurrentViewPosition { get; set; } = Vector3.Zero;
+		public Rotation LastCurrentViewRotation { get; set; } = Rotation.Identity;
 
 		public void Respawn( Entity corpse )
 		{
+			if ( corpse.IsValid() == false )
+			{
+				Respawn();
+				return;
+			}
+
 			Camera = new RagdollCamera();
 			RagdollCameraFocusEntity = corpse;
 
@@ -17,8 +26,20 @@ namespace SBoxDeathrun.Pawn
 
 		public override void Respawn()
 		{
-			CreateFreeCamera();
+			Camera = new FreeCamera();
+			var isp = DeathrunInitialSpectatorPoint.Random();
+			SetFreeCameraPositionAndRotation( To.Single( GetClientOwner() ), isp.Position, isp.Rotation );
 			RespawnShared();
+		}
+
+		[ClientRpc]
+		private void SetFreeCameraPositionAndRotation( Vector3 position, Rotation rotation )
+		{
+			if ( Camera is FreeCamera fc )
+			{
+				fc.TargetPos = position;
+				fc.TargetRot = rotation;
+			}
 		}
 
 		private void RespawnShared()
@@ -34,8 +55,13 @@ namespace SBoxDeathrun.Pawn
 		{
 			base.FrameSimulate( cl );
 
-			if ( Camera is RagdollCamera rc && RagdollCameraFocusEntity.IsValid() )
-				rc.SetFocusEntity( RagdollCameraFocusEntity );
+			if ( Camera is RagdollCamera rc )
+			{
+				ClientVectorToServer( CurrentView.Position, CurrentView.Rotation );
+
+				if ( RagdollCameraFocusEntity.IsValid() )
+					rc.SetFocusEntity( RagdollCameraFocusEntity );
+			}
 		}
 
 		public override void Simulate( Client cl )
@@ -45,7 +71,21 @@ namespace SBoxDeathrun.Pawn
 			SimulateActiveChild( cl, ActiveChild );
 
 			if ( ShouldSwapToFreeCamera() )
-				CreateFreeCamera();
+			{
+				var fc = new FreeCamera();
+				SetFreeCameraPositionAndRotation( To.Single( GetClientOwner() ), LastCurrentViewPosition, LastCurrentViewRotation );
+				Camera = fc;
+			}
+		}
+
+		[ServerCmd]
+		public static void ClientVectorToServer( Vector3 currentViewPosition, Rotation currentViewRotation )
+		{
+			if ( ConsoleSystem.Caller.Pawn is FreeCameraPawn fcp )
+			{
+				fcp.LastCurrentViewPosition = currentViewPosition;
+				fcp.LastCurrentViewRotation = currentViewRotation;
+			}
 		}
 
 		private bool ShouldSwapToFreeCamera()
@@ -56,13 +96,6 @@ namespace SBoxDeathrun.Pawn
 		private static bool HasRequestedMovement()
 		{
 			return Input.Forward != 0 || Input.Left != 0 || Input.Pressed( InputButton.Attack1 ) || Input.Pressed( InputButton.Attack2 );
-		}
-
-		private void CreateFreeCamera()
-		{
-			var sc = new FreeCamera();
-			Camera = sc;
-			sc.TargetPos = Position;
 		}
 	}
 }

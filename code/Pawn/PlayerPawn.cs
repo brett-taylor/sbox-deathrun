@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using System.Linq;
+using Sandbox;
 using SBoxDeathrun.Entities;
 using SBoxDeathrun.Pawn.Controller;
 using SBoxDeathrun.Weapon;
@@ -42,6 +43,7 @@ namespace SBoxDeathrun.Pawn
 
 			var team = DeathrunGame.Current.TeamManager.GetTeamForClient( GetClientOwner() );
 			var randomSpawnPoint = DeathrunSpawnPoint.SpawnPointForTeam( team );
+			
 			Position = randomSpawnPoint.Position;
 			Rotation = randomSpawnPoint.Rotation;
 		}

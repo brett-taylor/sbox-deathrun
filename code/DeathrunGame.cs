@@ -20,7 +20,7 @@ namespace SBoxDeathrun
 
 			RoundManager = new RoundManager();
 			TeamManager = new TeamManager();
-			var _ = new DeathrunHudEntity();
+			_ = new DeathrunHudEntity();
 
 			DeathEntity = new Entity();
 			DeathEntity.EntityName = "Death";
@@ -47,7 +47,7 @@ namespace SBoxDeathrun
 
 		public override void DoPlayerNoclip( Client player ) { }
 
-		public override void DoPlayerDevCam( Client player ) { }
+		//public override void DoPlayerDevCam( Client player ) { }
 
 		public override void DoPlayerSuicide( Client cl )
 		{

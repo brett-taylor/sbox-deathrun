@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Hammer;
 using Sandbox;
@@ -12,12 +13,14 @@ namespace SBoxDeathrun.Entities
 	[EntityTool( "Deathrun Player Spawnpoint", "Deathrun Sbox", "Defines a point where the player can (re)spawn" )]
 	public class DeathrunSpawnPoint : Entity
 	{
+		private static readonly IReadOnlyList<TeamType> VALID_TEAM_TYPES = ListHelpers.Of( TeamType.DEATH, TeamType.RUNNER );
+
 		[Property( Title = "The team this spawn point is for" )]
 		public TeamType Team { get; private set; } = TeamType.SPECTATOR;
 
 		public override void Spawn()
 		{
-			if ( Team == TeamType.SPECTATOR )
+			if ( VALID_TEAM_TYPES.Contains( Team ) == false )
 				throw new Exception( $"DeathrunSpawnPoint has Team Spectator Spawn. Did you forget to set it?" );
 		}
 
