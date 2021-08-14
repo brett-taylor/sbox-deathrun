@@ -1,9 +1,11 @@
+using Hammer;
 using Sandbox;
 
-namespace SBoxDeathrun.Entities.Map
+namespace SBoxDeathrun.Entities.Triggers
 {
 	[Library( "deathrun_sbox_trigger_kill" )]
-	public partial class DeathrunTriggerKill : BaseTrigger
+	[EntityTool( "Deathrun Trigger Kill", "Deathrun Sbox", "Instant kill trigger" )]
+	public partial class InstantKillTrigger : BaseTrigger
 	{
 		public override void OnTouchStartAll( Entity toucher )
 		{

@@ -11,16 +11,9 @@
 ]
 
 // 
-// SBoxDeathrun.Entities.DeathrunInitialSpectatorPoint : Sandbox.Entity 
+// SBoxDeathrun.Entities.DeathCameraPath : Sandbox.BasePathEntity 
 // 
-@PointClass editormodel( "models/editor/camera.vmdl" ) 
-metadata
-{
-	entity_tool_name = "Deathrun Initial Spectator Point"
-	entity_tool_group = "Deathrun Sbox"
-	entity_tool_tip = "Defines a point what a spectator will see on first join"
-}
-= deathrun_sbox_initial_spectator_point : ""
+@PathClass = deathrun_sbox_death_camera_path : ""
 [
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
@@ -28,33 +21,14 @@ metadata
 ]
 
 // 
-// SBoxDeathrun.Entities.DeathrunSpawnPoint : Sandbox.Entity 
-// 
-@PointClass editormodel( "models/editor/playerstart.vmdl" ) 
-metadata
-{
-	entity_tool_name = "Deathrun Player Spawnpoint"
-	entity_tool_group = "Deathrun Sbox"
-	entity_tool_tip = "Defines a point where the player can (re)spawn"
-}
-= deathrun_sbox_spawn_point : ""
-[
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	team(choices) : "The team this spawn point is for" : 0 : "" = [
-		0 : "SPECTATOR"
-		1 : "DEATH"
-		2 : "RUNNER"
-	]
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
-]
-
-// 
-// SBoxDeathrun.Entities.Map.DeathrunTriggerKill : Sandbox.BaseTrigger 
+// SBoxDeathrun.Entities.Triggers.InstantKillTrigger : Sandbox.BaseTrigger 
 // 
 @SolidClass 
 metadata
 {
+	entity_tool_name = "Deathrun Trigger Kill"
+	entity_tool_group = "Deathrun Sbox"
+	entity_tool_tip = "Instant kill trigger"
 	auto_apply_material = "materials/tools/toolstrigger.vmat"
 }
 = deathrun_sbox_trigger_kill : ""
@@ -84,5 +58,48 @@ metadata
 	output OnEndTouch(void) : "Fired when an entity stops touching this trigger. Only entities that passed this trigger's filters will cause this output to fire."
 	output OnStartTouchAll(void) : "Fired when an entity starts touching this trigger while no other passing entities are touching it."
 	output OnEndTouchAll(void) : "Fired when all entities touching this trigger have stopped touching it."
+]
+
+// 
+// SBoxDeathrun.Entities.Points.InitialSpectatorPoint : Sandbox.Entity 
+// 
+@PointClass editormodel( "models/editor/camera.vmdl" ) frustum( Fov, ZNear, ZFar, Color )
+metadata
+{
+	entity_tool_name = "Deathrun Initial Spectator Point"
+	entity_tool_group = "Deathrun Sbox"
+	entity_tool_tip = "Defines a point what a spectator will see on first join"
+}
+= deathrun_sbox_initial_spectator_point : ""
+[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	fov(integer) : "Fov" : 80 : ""
+	znear(integer) : "Znear" : 10 : ""
+	zfar(integer) : "Zfar" : 80000 : ""
+	color(color255) : "Color" :  : ""
+	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+]
+
+// 
+// SBoxDeathrun.Entities.Points.SpawnPoint : Sandbox.Entity 
+// 
+@PointClass editormodel( "models/editor/playerstart.vmdl" ) 
+metadata
+{
+	entity_tool_name = "Deathrun Player Spawnpoint"
+	entity_tool_group = "Deathrun Sbox"
+	entity_tool_tip = "Defines a point where the player can (re)spawn"
+}
+= deathrun_sbox_spawn_point : ""
+[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	team(choices) : "The team this spawn point is for" : 0 : "" = [
+		0 : "SPECTATOR"
+		1 : "DEATH"
+		2 : "RUNNER"
+	]
+	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 ]
 

@@ -1,5 +1,5 @@
 ﻿using Sandbox;
-using SBoxDeathrun.Entities;
+using SBoxDeathrun.Entities.Points;
 using SBoxDeathrun.Pawn.Camera;
 
 namespace SBoxDeathrun.Pawn
@@ -27,18 +27,31 @@ namespace SBoxDeathrun.Pawn
 		public override void Respawn()
 		{
 			Camera = new FreeCamera();
-			var isp = DeathrunInitialSpectatorPoint.Random();
-			SetFreeCameraPositionAndRotation( To.Single( GetClientOwner() ), isp.Position, isp.Rotation );
+			var isp = InitialSpectatorPoint.Random();
+			SetFreeCameraProperties( To.Single( GetClientOwner() ), isp.Position, isp.Rotation, isp.Fov, isp.ZNear, isp.ZFar );
 			RespawnShared();
 		}
 
 		[ClientRpc]
-		private void SetFreeCameraPositionAndRotation( Vector3 position, Rotation rotation )
+		private void SetFreeCameraProperties( Vector3 position, Rotation rotation )
 		{
 			if ( Camera is FreeCamera fc )
 			{
 				fc.TargetPos = position;
 				fc.TargetRot = rotation;
+			}
+		}
+
+		[ClientRpc]
+		private void SetFreeCameraProperties( Vector3 position, Rotation rotation, float fov, float zNear, float zFar )
+		{
+			if ( Camera is FreeCamera fc )
+			{
+				fc.TargetPos = position;
+				fc.TargetRot = rotation;
+				fc.TargetFov = fov;
+				fc.TargetZNear = zNear;
+				fc.TargetZFar = zFar;
 			}
 		}
 
@@ -73,7 +86,7 @@ namespace SBoxDeathrun.Pawn
 			if ( ShouldSwapToFreeCamera() )
 			{
 				var fc = new FreeCamera();
-				SetFreeCameraPositionAndRotation( To.Single( GetClientOwner() ), LastCurrentViewPosition, LastCurrentViewRotation );
+				SetFreeCameraProperties( To.Single( GetClientOwner() ), LastCurrentViewPosition, LastCurrentViewRotation );
 				Camera = fc;
 			}
 		}

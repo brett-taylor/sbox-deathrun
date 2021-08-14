@@ -1,8 +1,9 @@
 ﻿using Sandbox;
-using SBoxDeathrun.Entities;
+using SBoxDeathrun.Entities.Points;
 using SBoxDeathrun.Round;
 using SBoxDeathrun.Team;
 using SBoxDeathrun.Ui;
+using SpawnPoint = SBoxDeathrun.Entities.Points.SpawnPoint;
 
 namespace SBoxDeathrun
 {
@@ -65,7 +66,7 @@ namespace SBoxDeathrun
 
 		public override void MoveToSpawnpoint( Entity pawn )
 		{
-			pawn.Transform = DeathrunSpawnPoint.Random().Transform;
+			pawn.Transform = SpawnPoint.Random().Transform;
 		}
 	}
 }

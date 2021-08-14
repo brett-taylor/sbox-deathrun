@@ -6,11 +6,13 @@ namespace SBoxDeathrun.Pawn.Camera
 	{
 		public Vector3 TargetPos { get; set; }
 		public Rotation TargetRot { get; set; }
+		public float TargetFov { get; set; } = 80;
+		public float TargetZNear { get; set; } = 10;
+		public float TargetZFar { get; set; } = 80000;
 
 		private Angles LookAngles;
 		private Vector3 MoveInput;
 		private float MoveSpeed;
-		private float FovOverride = 0;
 
 		public override void Activated()
 		{
@@ -19,8 +21,6 @@ namespace SBoxDeathrun.Pawn.Camera
 			Pos = TargetPos;
 			Rot = TargetRot;
 			LookAngles = Rot.Angles();
-			FovOverride = 80;
-
 			DoFPoint = 0.0f;
 			DoFBlurSize = 0.0f;
 		}
@@ -32,7 +32,9 @@ namespace SBoxDeathrun.Pawn.Camera
 				return;
 
 			var tr = Trace.Ray( Pos, Pos + Rot.Forward * 4096 ).UseHitboxes().Run();
-			FieldOfView = FovOverride;
+			FieldOfView = TargetFov;
+			ZNear = TargetZNear;
+			ZFar = TargetZFar;
 
 			Viewer = null;
 			{
@@ -50,7 +52,7 @@ namespace SBoxDeathrun.Pawn.Camera
 			if ( input.Down( InputButton.Run ) ) MoveSpeed = 5;
 			if ( input.Down( InputButton.Duck ) ) MoveSpeed = 0.2f;
 
-			LookAngles += input.AnalogLook * (FovOverride / 80.0f);
+			LookAngles += input.AnalogLook * (TargetFov / 80.0f);
 			LookAngles.roll = 0;
 
 			input.Clear();
