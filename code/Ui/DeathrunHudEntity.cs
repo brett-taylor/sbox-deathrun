@@ -13,8 +13,8 @@ namespace SBoxDeathrun.Ui
 
 			RootPanel.AddChild<RoundHud>();
 			RootPanel.AddChild<HealthHud>();
-
-			RootPanel.AddChild<NameTags>();
+			RootPanel.AddChild<DeathCursor>();
+			
 			RootPanel.AddChild<ChatBox>();
 			RootPanel.AddChild<VoiceList>();
 			RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();

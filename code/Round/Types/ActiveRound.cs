@@ -7,7 +7,10 @@ namespace SBoxDeathrun.Round.Types
 {
 	public class ActiveRound : BaseRound
 	{
-		public override RoundTimeLimit TimeLimit => RoundTimeLimit.WithLimit( GameConfig.ACTIVE_ROUND_LENGTH );
+		[ConVar.ReplicatedAttribute( "dr_round_active_length" )]
+		public static float ACTIVE_ROUND_LENGTH { get; set; } = 60f;
+		
+		public override RoundTimeLimit TimeLimit => RoundTimeLimit.WithLimit( ACTIVE_ROUND_LENGTH );
 		public override RoundType RoundType => RoundType.ACTIVE;
 		public override RoundType NextRound => RoundType.POST;
 		public override string RoundStartEventName => DeathrunEvents.ROUND_ACTIVE_STARTED;

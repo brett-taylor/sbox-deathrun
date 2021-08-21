@@ -7,10 +7,13 @@ namespace SBoxDeathrun.Round
 {
 	public partial class RoundManager : Entity
 	{
+		[ConVar.ReplicatedAttribute( "dr_minimum_players" )]
+		public static int MINIMUM_PLAYERS { get; set; } = 2;
+		
 		public BaseRound Round { get; private set; }
 		[Net] public float RoundStartTime { get; private set; }
-		[Net, OnChangedCallback] public RoundType CurrentRoundType { get; private set; }
 		[Net] public ActiveRoundOutcome LastActiveRoundOutcome { get; private set; }
+		[Net, OnChangedCallback] private RoundType CurrentRoundType { get; set; }
 
 		public RoundManager()
 		{
@@ -25,7 +28,7 @@ namespace SBoxDeathrun.Round
 			if ( Round is null )
 				return;
 
-			if ( CurrentRoundType != RoundType.WAITING_FOR_PLAYERS && Client.All.Count < GameConfig.MINIMUM_PLAYERS )
+			if ( CurrentRoundType != RoundType.WAITING_FOR_PLAYERS && Client.All.Count < MINIMUM_PLAYERS )
 			{
 				ChangeRounds( RoundType.WAITING_FOR_PLAYERS );
 				return;

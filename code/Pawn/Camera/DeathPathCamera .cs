@@ -24,19 +24,20 @@ namespace SBoxDeathrun.Pawn.Camera
 			base.Activated();
 
 			Rot = new Angles(
-				PITCH_LOWER_BOUND.LerpTo( PITCH_UPPER_BOUND, 0.5f ),
+				PitchOverride,
 				InitialYaw,
 				0f
 			).ToRotation();
 		}
 
-		public void SetInitialYaw( float initialYaw )
+		public void SetInitialAngle( float initialYaw )
 		{
 			InitialYaw = initialYaw;
 			YawOverride = InitialYaw;
+			PitchOverride = PITCH_LOWER_BOUND.LerpTo( PITCH_UPPER_BOUND, 0.5f );
 
 			Rot = new Angles(
-				PITCH_LOWER_BOUND.LerpTo( PITCH_UPPER_BOUND, 0.5f ),
+				PitchOverride,
 				InitialYaw,
 				0f
 			).ToRotation();
@@ -52,19 +53,18 @@ namespace SBoxDeathrun.Pawn.Camera
 			Rot = Rotation.From( angles );
 
 			FieldOfView = TARGET_FOV;
-
-			DebugOverlay.ScreenText( Vector2.One * 50f, 0, Color.Green, $"{Host.Name} yaw: {Rot.Yaw()}" );
 		}
 
 		public override void BuildInput( InputBuilder input )
 		{
 			base.BuildInput( input );
 
-			if ( input.Down( InputButton.Attack1 ) == false )
-				return;
-			
-			YawOverride += input.AnalogLook.yaw * (TARGET_FOV / 80.0f);
-			PitchOverride += input.AnalogLook.pitch * (TARGET_FOV / 80.0f);
+			if ( input.Down( InputButton.Attack1 ) )
+			{
+				YawOverride += input.AnalogLook.yaw * (TARGET_FOV / 80.0f);
+				PitchOverride += input.AnalogLook.pitch * (TARGET_FOV / 80.0f);
+			}
+
 			PitchOverride = PitchOverride.Clamp( PITCH_LOWER_BOUND, PITCH_UPPER_BOUND );
 		}
 	}

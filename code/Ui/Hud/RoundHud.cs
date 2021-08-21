@@ -62,7 +62,7 @@ namespace SBoxDeathrun.Ui.Hud
 
 			if ( currentRound.RoundType == RoundType.WAITING_FOR_PLAYERS )
 			{
-				var playersRequired = GameConfig.MINIMUM_PLAYERS - Client.All.Count;
+				var playersRequired = RoundManager.MINIMUM_PLAYERS - Client.All.Count;
 				return $"{playersRequired} More {"Player".Plural( playersRequired )} {"Is".Plural( playersRequired, "Are" )} Required.";
 			}
 

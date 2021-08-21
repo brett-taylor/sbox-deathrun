@@ -73,6 +73,16 @@ namespace SBoxDeathrun.Round
 			return pp;
 		}
 
+		protected static DeathPathCameraPawn CreateDeathCameraPawn( Client client )
+		{
+			Host.AssertServer();
+			CleanUpExistingPawn( client );
+			var dpcp = new DeathPathCameraPawn();
+			client.Pawn = dpcp;
+			dpcp.Respawn();
+			return dpcp;
+		}
+
 		public override string ToString() => $"Round[RoundType={RoundType}, NextRound={NextRound} ShouldEnd={ShouldEnd}, TL={TimeLimit} ]";
 	}
 }

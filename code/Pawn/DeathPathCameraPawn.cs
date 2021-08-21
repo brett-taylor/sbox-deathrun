@@ -52,7 +52,7 @@ namespace SBoxDeathrun.Pawn
 		private void SetInitialYawOnDeathPathCamera( float initialYaw )
 		{
 			if ( Camera is DeathPathCamera dpc )
-				dpc.SetInitialYaw(initialYaw);
+				dpc.SetInitialAngle(initialYaw);
 		}
 	}
 }
