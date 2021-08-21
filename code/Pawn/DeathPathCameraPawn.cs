@@ -21,7 +21,6 @@ namespace SBoxDeathrun.Pawn
 			DeathPathPercentage = 0f;
 
 			Camera = new DeathPathCamera();
-			SetInitialYawOnDeathPathCamera(To.Single(GetClientOwner()), DeathCameraPath.GetRotationOnCurve( 0.1f ).Yaw());
 
 			EnableAllCollisions = false;
 			EnableDrawing = false;
@@ -46,13 +45,6 @@ namespace SBoxDeathrun.Pawn
 			var dpc = Camera as DeathPathCamera;
 			dpc.TargetPosition = TargetCameraPosition;
 			dpc.TargetRotation = TargetCameraRotation;
-		}
-
-		[ClientRpc]
-		private void SetInitialYawOnDeathPathCamera( float initialYaw )
-		{
-			if ( Camera is DeathPathCamera dpc )
-				dpc.SetInitialAngle(initialYaw);
 		}
 	}
 }

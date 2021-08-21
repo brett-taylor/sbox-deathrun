@@ -15,41 +15,23 @@ namespace SBoxDeathrun.Pawn.Camera
 
 		public Vector3 TargetPosition { get; set; }
 		public Rotation TargetRotation { get; set; }
-		private float InitialYaw { get; set; }
-		private float YawOverride { get; set; }
-		private float PitchOverride { get; set; }
+		private float YawAddition { get; set; }
+		private float PitchAddition { get; set; }
 
 		public override void Activated()
 		{
 			base.Activated();
 
-			Rot = new Angles(
-				PitchOverride,
-				InitialYaw,
-				0f
-			).ToRotation();
+			PitchAddition = PITCH_LOWER_BOUND.LerpTo( PITCH_UPPER_BOUND, 0.5f );
 		}
-
-		public void SetInitialAngle( float initialYaw )
-		{
-			InitialYaw = initialYaw;
-			YawOverride = InitialYaw;
-			PitchOverride = PITCH_LOWER_BOUND.LerpTo( PITCH_UPPER_BOUND, 0.5f );
-
-			Rot = new Angles(
-				PitchOverride,
-				InitialYaw,
-				0f
-			).ToRotation();
-		}
-
+		
 		public override void Update()
 		{
 			Pos = TargetPosition;
 
 			var angles = TargetRotation.Angles();
-			angles.yaw = YawOverride;
-			angles.pitch = PitchOverride;
+			angles.yaw += YawAddition;
+			angles.pitch += PitchAddition;
 			Rot = Rotation.From( angles );
 
 			FieldOfView = TARGET_FOV;
@@ -61,11 +43,11 @@ namespace SBoxDeathrun.Pawn.Camera
 
 			if ( input.Down( InputButton.Attack1 ) )
 			{
-				YawOverride += input.AnalogLook.yaw * (TARGET_FOV / 80.0f);
-				PitchOverride += input.AnalogLook.pitch * (TARGET_FOV / 80.0f);
+				YawAddition += input.AnalogLook.yaw * (TARGET_FOV / 80.0f);
+				PitchAddition += input.AnalogLook.pitch * (TARGET_FOV / 80.0f);
 			}
 
-			PitchOverride = PitchOverride.Clamp( PITCH_LOWER_BOUND, PITCH_UPPER_BOUND );
+			PitchAddition = PitchAddition.Clamp( PITCH_LOWER_BOUND, PITCH_UPPER_BOUND );
 		}
 	}
 }
