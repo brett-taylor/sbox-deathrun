@@ -54,9 +54,6 @@ namespace SBoxDeathrun.Pawn.Camera
 
 			LookAngles += input.AnalogLook * (TargetFov / 80.0f);
 			LookAngles.roll = 0;
-
-			input.Clear();
-			input.StopProcessing = true;
 		}
 
 		private void FreeMove()

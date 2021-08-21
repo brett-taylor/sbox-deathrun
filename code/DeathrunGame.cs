@@ -1,5 +1,4 @@
 ﻿using Sandbox;
-using SBoxDeathrun.Entities.Points;
 using SBoxDeathrun.Round;
 using SBoxDeathrun.Team;
 using SBoxDeathrun.Ui;
@@ -48,7 +47,7 @@ namespace SBoxDeathrun
 
 		public override void DoPlayerNoclip( Client player ) { }
 
-		//public override void DoPlayerDevCam( Client player ) { }
+		public override void DoPlayerDevCam( Client player ) { }
 
 		public override void DoPlayerSuicide( Client cl )
 		{

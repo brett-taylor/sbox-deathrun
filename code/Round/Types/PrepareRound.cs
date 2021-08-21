@@ -22,7 +22,7 @@ namespace SBoxDeathrun.Round.Types
 
 		public override void RoundStart()
 		{
-			var chosenDeath = IEnumerableHelpers.Random( Client.All );
+			var chosenDeath = IEnumerableHelper.Random( Client.All );
 			foreach ( var client in Client.All )
 			{
 				DeathrunGame.Current.TeamManager.AddClientToTeam( client, client == chosenDeath ? TeamType.DEATH : TeamType.RUNNER );

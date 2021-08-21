@@ -1,26 +1,4 @@
 // 
-// SBoxDeathrun.Weapon.Types.Pistol : SBoxDeathrun.Weapon.Weapon 
-// 
-@PointClass = deathrun_sbox_weapon_pistol : ""
-[
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
-
-	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
-]
-
-// 
-// SBoxDeathrun.Entities.DeathCameraPath : Sandbox.BasePathEntity 
-// 
-@PathClass = deathrun_sbox_death_camera_path : ""
-[
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
-]
-
-// 
 // SBoxDeathrun.Entities.Triggers.InstantKillTrigger : Sandbox.BaseTrigger 
 // 
 @SolidClass 
@@ -101,5 +79,27 @@ metadata
 		2 : "RUNNER"
 	]
 	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+]
+
+// 
+// SBoxDeathrun.Entities.Paths.DeathCameraPath : Sandbox.BasePathEntity 
+// 
+@PathClass = deathrun_sbox_death_camera_path : ""
+[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+]
+
+// 
+// SBoxDeathrun.Weapon.Types.Pistol : SBoxDeathrun.Weapon.Weapon 
+// 
+@PointClass = deathrun_sbox_weapon_pistol : ""
+[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 

@@ -1,5 +1,4 @@
 ﻿using Sandbox;
-using SBoxDeathrun.Entities.Points;
 using SBoxDeathrun.Pawn.Controller;
 using SBoxDeathrun.Weapon;
 using SBoxDeathrun.Weapon.Types;

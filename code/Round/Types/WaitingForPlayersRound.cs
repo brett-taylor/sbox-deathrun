@@ -1,4 +1,5 @@
 using Sandbox;
+using SBoxDeathrun.Pawn;
 using SBoxDeathrun.Team;
 using SBoxDeathrun.Utils;
 
@@ -11,6 +12,16 @@ namespace SBoxDeathrun.Round.Types
 		public override RoundType NextRound => RoundType.PREPARE;
 		public override string RoundStartEventName => DeathrunEvents.ROUND_WAITING_FOR_PLAYERS_STARTED;
 		public override string RoundCompletedEventName => DeathrunEvents.ROUND_WAITING_FOR_PLAYERS_COMPLETED;
+
+		public override void ClientJoined( Client client )
+		{
+			DeathrunGame.Current.TeamManager.AddClientToTeam( client, TeamType.DEATH );
+			CreateFreeCameraPawn( client );
+
+			var dcp = new DeathPathCameraPawn();
+			client.Pawn = dcp;
+			dcp.Respawn();
+		}
 
 		public override void RoundStart()
 		{

@@ -13,7 +13,7 @@ namespace SBoxDeathrun.Entities.Points
 	[EntityTool( "Deathrun Player Spawnpoint", "Deathrun Sbox", "Defines a point where the player can (re)spawn" )]
 	public class SpawnPoint : Entity
 	{
-		private static readonly IReadOnlyList<TeamType> VALID_TEAM_TYPES = ListHelpers.Of( TeamType.DEATH, TeamType.RUNNER );
+		private static readonly IReadOnlyList<TeamType> VALID_TEAM_TYPES = ListHelper.Of( TeamType.DEATH, TeamType.RUNNER );
 
 		[Property( Title = "The team this spawn point is for" )]
 		public TeamType Team { get; private set; } = TeamType.SPECTATOR;
@@ -28,7 +28,7 @@ namespace SBoxDeathrun.Entities.Points
 		{
 			Host.AssertServer();
 
-			var sp = IEnumerableHelpers.Random( All.OfType<SpawnPoint>() );
+			var sp = IEnumerableHelper.Random( All.OfType<SpawnPoint>() );
 			if ( sp.IsValid() == false )
 				throw new Exception( $"No DeathrunSpawnPoint found" );
 
@@ -39,7 +39,7 @@ namespace SBoxDeathrun.Entities.Points
 		{
 			Host.AssertServer();
 
-			var sp = IEnumerableHelpers.Random( All
+			var sp = IEnumerableHelper.Random( All
 				.OfType<SpawnPoint>()
 				.Where( dsp => dsp.Team == team )
 			);

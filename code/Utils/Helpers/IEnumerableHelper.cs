@@ -1,15 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sandbox;
 
 namespace SBoxDeathrun.Utils.Helpers
 {
-	public static class IEnumerableHelpers
+	public static class IEnumerableHelper
 	{
 		public static T Random<T>( IEnumerable<T> collection )
 		{
-			var random = new Random();
-			return collection.OrderBy( _ => random.NextDouble() ).First();
+			return collection.OrderBy( _ => Rand.Double() ).First();
 		}
 	}
 }

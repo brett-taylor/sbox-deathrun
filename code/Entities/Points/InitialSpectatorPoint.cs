@@ -22,7 +22,7 @@ namespace SBoxDeathrun.Entities.Points
 		{
 			Host.AssertServer();
 
-			var isp = IEnumerableHelpers.Random( All.OfType<InitialSpectatorPoint>() );
+			var isp = IEnumerableHelper.Random( All.OfType<InitialSpectatorPoint>() );
 			if ( isp.IsValid() == false )
 				throw new Exception( $"No DeathrunInitialSpectatorPoint found" );
 
