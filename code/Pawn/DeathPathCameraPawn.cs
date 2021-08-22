@@ -6,7 +6,7 @@ namespace SBoxDeathrun.Pawn
 {
 	public partial class DeathPathCameraPawn : BasePawn
 	{
-		[ConVar.ReplicatedAttribute( "dr_death_camera_pawn_move_speed" )]
+		[ConVar.ReplicatedAttribute( "deathrun_death_camera_pawn_move_speed" )]
 		public static float MOVE_SPEED { get; set; } = 0.2f;
 		
 		[Net, Local] private Vector3 TargetCameraPosition { get; set; }

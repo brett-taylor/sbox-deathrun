@@ -6,7 +6,7 @@ namespace SBoxDeathrun.Entities.Paths
 {
 	public partial class DeathCameraPath
 	{
-		[ServerVar( "dr_death_camera_path_debug" )]
+		[ServerVar( "deathrun_death_camera_path_debug" )]
 		public static bool DEATH_CAMERA_PATH_DEBUG { get; set; } = false;
 
 		[Event.Entity.PostSpawnAttribute]

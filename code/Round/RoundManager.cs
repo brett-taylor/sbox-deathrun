@@ -7,7 +7,7 @@ namespace SBoxDeathrun.Round
 {
 	public partial class RoundManager : Entity
 	{
-		[ConVar.ReplicatedAttribute( "dr_minimum_players" )]
+		[ConVar.ReplicatedAttribute( "deathrun_minimum_players" )]
 		public static int MINIMUM_PLAYERS { get; set; } = 2;
 		
 		public BaseRound Round { get; private set; }
@@ -92,7 +92,7 @@ namespace SBoxDeathrun.Round
 			LastActiveRoundOutcome = outcome;
 		}
 
-		[ServerCmd( "dr_end_round" )]
+		[ServerCmd( "deathrun_end_round" )]
 		public static void EndRound()
 		{
 			DeathrunGame.Current.RoundManager.ChangeRounds(DeathrunGame.Current.RoundManager.Round.NextRound);

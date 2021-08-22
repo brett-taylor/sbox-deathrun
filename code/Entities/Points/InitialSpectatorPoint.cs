@@ -7,7 +7,7 @@ using SBoxDeathrun.Utils.Helpers;
 
 namespace SBoxDeathrun.Entities.Points
 {
-	[Library( "deathrun_sbox_initial_spectator_point" )]
+	[Library( "deathrun_initial_spectator_point" )]
 	[EditorModel( "models/editor/camera.vmdl" )]
 	[EntityTool( "Deathrun Initial Spectator Point", "Deathrun Sbox", "Defines a point what a spectator will see on first join" )]
 	[ShowFrustum( "Fov", "ZNear", "ZFar", "Color" )]

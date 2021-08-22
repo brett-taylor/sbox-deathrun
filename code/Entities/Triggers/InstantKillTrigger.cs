@@ -3,7 +3,7 @@ using Sandbox;
 
 namespace SBoxDeathrun.Entities.Triggers
 {
-	[Library( "deathrun_sbox_trigger_kill" )]
+	[Library( "deathrun_trigger_kill" )]
 	[EntityTool( "Deathrun Trigger Kill", "Deathrun Sbox", "Instant kill trigger" )]
 	public partial class InstantKillTrigger : BaseTrigger
 	{

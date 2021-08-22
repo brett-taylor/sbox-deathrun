@@ -5,7 +5,7 @@ namespace SBoxDeathrun.Round.Types
 {
 	public class PostRound : BaseRound
 	{
-		[ConVar.ReplicatedAttribute( "dr_round_post_length" )]
+		[ConVar.ReplicatedAttribute( "deathrun_round_post_length" )]
 		public static float POST_ROUND_LENGTH { get; set; } = 3f;
 
 		public override RoundTimeLimit TimeLimit => RoundTimeLimit.WithLimit( POST_ROUND_LENGTH );

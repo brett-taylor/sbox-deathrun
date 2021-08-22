@@ -2,7 +2,7 @@
 
 namespace SBoxDeathrun.Weapon.Types
 {
-	[Library( "deathrun_sbox_weapon_pistol", Title = "Pistol", Spawnable = true )]
+	[Library( "deathrun_weapon_pistol", Title = "Pistol", Spawnable = true )]
 	public partial class Pistol : Weapon
 	{
 		public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";

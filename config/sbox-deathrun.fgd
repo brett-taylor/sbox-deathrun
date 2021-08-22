@@ -9,7 +9,7 @@ metadata
 	entity_tool_tip = "Instant kill trigger"
 	auto_apply_material = "materials/tools/toolstrigger.vmat"
 }
-= deathrun_sbox_trigger_kill : ""
+= deathrun_trigger_kill : ""
 [
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
@@ -92,7 +92,7 @@ metadata
 	entity_tool_group = "Deathrun Sbox"
 	entity_tool_tip = "Defines a point what a spectator will see on first join"
 }
-= deathrun_sbox_initial_spectator_point : ""
+= deathrun_initial_spectator_point : ""
 [
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
@@ -113,7 +113,7 @@ metadata
 	entity_tool_group = "Deathrun Sbox"
 	entity_tool_tip = "Defines a point where the player can (re)spawn"
 }
-= deathrun_sbox_spawn_point : ""
+= deathrun_spawn_point : ""
 [
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
@@ -128,7 +128,7 @@ metadata
 // 
 // SBoxDeathrun.Entities.Paths.DeathCameraPath : Sandbox.BasePathEntity 
 // 
-@PathClass = deathrun_sbox_death_camera_path : ""
+@PathClass = deathrun_death_camera_path : ""
 [
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
@@ -138,7 +138,7 @@ metadata
 // 
 // SBoxDeathrun.Weapon.Types.Pistol : SBoxDeathrun.Weapon.Weapon 
 // 
-@PointClass = deathrun_sbox_weapon_pistol : ""
+@PointClass = deathrun_weapon_pistol : ""
 [
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."

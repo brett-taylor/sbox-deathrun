@@ -8,7 +8,7 @@ using SBoxDeathrun.Utils.Helpers;
 
 namespace SBoxDeathrun.Entities.Points
 {
-	[Library( "deathrun_sbox_spawn_point" )]
+	[Library( "deathrun_spawn_point" )]
 	[EditorModel( "models/editor/playerstart.vmdl" )]
 	[EntityTool( "Deathrun Player Spawnpoint", "Deathrun Sbox", "Defines a point where the player can (re)spawn" )]
 	public class SpawnPoint : Entity

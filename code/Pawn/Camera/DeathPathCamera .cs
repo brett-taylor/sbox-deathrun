@@ -4,13 +4,13 @@ namespace SBoxDeathrun.Pawn.Camera
 {
 	public class DeathPathCamera : Sandbox.Camera
 	{
-		[ConVar.ReplicatedAttribute( "dr_death_camera_target_fov" )]
+		[ConVar.ReplicatedAttribute( "deathrun_death_camera_target_fov" )]
 		public static float TARGET_FOV { get; set; } = 80f;
 
-		[ConVar.ReplicatedAttribute( "dr_death_camera_pitch_lower_bound" )]
+		[ConVar.ReplicatedAttribute( "deathrun_death_camera_pitch_lower_bound" )]
 		public static float PITCH_LOWER_BOUND { get; set; } = 20f;
 
-		[ConVar.ReplicatedAttribute( "dr_death_camera_pitch_upper_bound" )]
+		[ConVar.ReplicatedAttribute( "deathrun_death_camera_pitch_upper_bound" )]
 		public static float PITCH_UPPER_BOUND { get; set; } = 70f;
 
 		public Vector3 TargetPosition { get; set; }

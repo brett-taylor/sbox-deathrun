@@ -7,7 +7,7 @@ namespace SBoxDeathrun.Round.Types
 {
 	public class ActiveRound : BaseRound
 	{
-		[ConVar.ReplicatedAttribute( "dr_round_active_length" )]
+		[ConVar.ReplicatedAttribute( "deathrun_round_active_length" )]
 		public static float ACTIVE_ROUND_LENGTH { get; set; } = 60f;
 		
 		public override RoundTimeLimit TimeLimit => RoundTimeLimit.WithLimit( ACTIVE_ROUND_LENGTH );

@@ -6,19 +6,19 @@ namespace SBoxDeathrun.Team
 {
 	public class DeathTeam : BaseTeam
 	{
-		[ServerVar( "dr_loadout_death_sprint_speed" )]
+		[ServerVar( "deathrun_loadout_death_sprint_speed" )]
 		public static float SPRINT_SPEED { get; set; } = 320f;
 		
-		[ServerVar( "dr_loadout_death_walk_speed" )]
+		[ServerVar( "deathrun_loadout_death_walk_speed" )]
 		public static float WALK_SPEED { get; set; } = 320f;
 		
-		[ServerVar( "dr_loadout_death_default_speed" )]
+		[ServerVar( "deathrun_loadout_death_default_speed" )]
 		public static float DEFAULT_SPEED { get; set; } = 320f;
 		
-		[ServerVar( "dr_loadout_death_ground_friction" )]
+		[ServerVar( "deathrun_loadout_death_ground_friction" )]
 		public static float GROUND_FRICTION { get; set; } = 8f;
 		
-		[ServerVar( "dr_loadout_death_air_acceleration" )]
+		[ServerVar( "deathrun_loadout_death_air_acceleration" )]
 		public static float AIR_ACCELERATION { get; set; } = 500f;
 		
 		protected override void PlayerSpawned( Client client, FreeCameraPawn pawn ) { }

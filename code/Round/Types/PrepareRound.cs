@@ -7,7 +7,7 @@ namespace SBoxDeathrun.Round.Types
 {
 	public class PrepareRound : BaseRound
 	{
-		[ConVar.ReplicatedAttribute( "dr_round_prepare_length" )]
+		[ConVar.ReplicatedAttribute( "deathrun_round_prepare_length" )]
 		public static float PREPARE_ROUND_LENGTH { get; set; } = 10f;
 
 		public override RoundTimeLimit TimeLimit => RoundTimeLimit.WithLimit( PREPARE_ROUND_LENGTH );

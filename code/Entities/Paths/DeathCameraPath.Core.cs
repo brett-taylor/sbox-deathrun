@@ -4,10 +4,10 @@ using Sandbox;
 
 namespace SBoxDeathrun.Entities.Paths
 {
-	[Library( "deathrun_sbox_death_camera_path" )]
+	[Library( "deathrun_death_camera_path" )]
 	public partial class DeathCameraPath : BasePathEntity
 	{
-		[ServerVar( "dr_death_camera_path_segments" )]
+		[ServerVar( "deathrun_death_camera_path_segments" )]
 		public static int DEATH_CAMERA_PATH_SEGMENTS { get; set; } = 10;
 
 		private float TotalPercentageFromSegments { get; set; }
