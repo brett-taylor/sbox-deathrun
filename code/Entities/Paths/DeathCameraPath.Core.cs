@@ -10,8 +10,9 @@ namespace SBoxDeathrun.Entities.Paths
 		[ServerVar( "dr_death_camera_path_segments" )]
 		public static int DEATH_CAMERA_PATH_SEGMENTS { get; set; } = 10;
 
-		public float TotalLength { get; private set; }
-		public IReadOnlyList<DeathCameraPathSegment> Segments { get; private set; }
+		private float TotalPercentageFromSegments { get; set; }
+		private float TotalLength { get; set; }
+		private IReadOnlyList<DeathCameraPathSegment> Segments { get; set; }
 
 		public override void Spawn()
 		{
@@ -51,12 +52,13 @@ namespace SBoxDeathrun.Entities.Paths
 			}
 
 			Segments = list;
+			TotalPercentageFromSegments = Segments.Select( s => s.Percentage ).Sum();
 		}
 
 		private DeathCameraPathSegment GetSegmentFromPercentage( float currentPathPercentage )
 		{
 			AssertValidCurrentPathPercentage( currentPathPercentage );
-			return Segments.First( s => s.IsPercentageWithinRange( currentPathPercentage ) );
+			return Segments.First( s => s.IsPercentageWithinRange( currentPathPercentage, TotalPercentageFromSegments ) );
 		}
 
 		public Vector3 GetPositionOnCurve( float currentPathPercentage )

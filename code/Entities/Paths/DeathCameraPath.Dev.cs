@@ -46,6 +46,7 @@ namespace SBoxDeathrun.Entities.Paths
 				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"Node Count: {PathNodes.Count}" );
 				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"Segment Count: {Segments.Count}" );
 				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"Path Length: {TotalLength}" );
+				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"100% Percentage: {TotalPercentageFromSegments}" );
 
 				lineIndex++;
 				foreach ( var segment in Segments )
@@ -53,7 +54,6 @@ namespace SBoxDeathrun.Entities.Paths
 						$"Segment: {segment.Length} Range: {segment.PercentageFrom} - {segment.PercentageTo}" );
 
 				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"Length From Segments: {Segments.Select( s => s.Length ).Sum()}" );
-				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"Percentage From Segments: {Segments.Select( s => s.Percentage ).Sum()}" );
 			}
 		}
 	}

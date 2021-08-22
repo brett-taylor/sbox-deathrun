@@ -12,7 +12,7 @@ namespace SBoxDeathrun.Entities.Paths
 			public float PercentageTo => PreviousPercentage + Percentage;
 
 			private float PreviousPercentage { get; }
-			
+
 			public DeathCameraPathSegment( PathNode from, PathNode to, float length, float totalLength, float previousPercentage )
 			{
 				From = from;
@@ -22,15 +22,11 @@ namespace SBoxDeathrun.Entities.Paths
 				PreviousPercentage = previousPercentage;
 			}
 
-			public bool IsPercentageWithinRange( float percentage )
+			public bool IsPercentageWithinRange( float percentage, float totalPathPercentage )
 			{
-				// TODO: nice edge case, probably better solution.
-				// Cant swap inclusive as it just moves the issue to 0f
-				// Limit 0f to 0.99f?
-				// Keep this little edge case detection?
-				if ( PercentageTo >= 1f && percentage >= 1f )
+				if ( PercentageTo >= totalPathPercentage && percentage >= totalPathPercentage )
 					return true;
-				
+
 				return percentage >= PercentageFrom && percentage < PercentageTo;
 			}
 		}

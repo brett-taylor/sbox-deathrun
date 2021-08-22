@@ -39,6 +39,50 @@ metadata
 ]
 
 // 
+// SBoxDeathrun.Entities.Traps.MovingPlatform : Sandbox.ModelEntity 
+// 
+@PointClass tags( SupportsSolids ) model() drawangles( movedir, movedir_islocal ) = deathrun_moving_platform : ""
+[
+	model(studio) [report]: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) [ group="Render Properties" ] : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
+	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	movedir(angle) : "Move Direction" :  : ""
+	movedir_islocal(boolean) : "Move Direction is Expressed in Local Space" : 1 : ""
+	movedir_type(choices) : "Movement Type" : 3 : "" = [
+		3 : "Moving"
+		1 : "Rotating"
+		4 : "Rotating Continious"
+	]
+	movedistance(float) : "Move Distance" : 100 : ""
+	speed(float) : "Speed" : 64 : ""
+	timetohold(float) : "Time To Hold" : 0 : ""
+	spawnsettings(flags) : "Spawn Settings" :  : "" = [
+		1 : "Starts Moving" : 1
+		2 : "Loop Movement" : 0
+	]
+	startmovesound(sound) [ group="Sounds" ] : "Start Move Sound" :  : ""
+	stopmovesound(sound) [ group="Sounds" ] : "Stop Move Sound" :  : ""
+	moving_sound(sound) [ group="Sounds" ] : "Moving Sound" :  : ""
+	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input StartMoving(void) : ""
+	input StartMovingForward(void) : ""
+	input StartMovingBackwards(void) : ""
+	input ReverseMoving(void) : ""
+	input StopMoving(void) : ""
+	input ToggleMoving(void) : ""
+	input SetSpeed(float) : ""
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+
+	output OnReachedStart(void) : ""
+	output OnReachedEnd(void) : ""
+]
+
+// 
 // SBoxDeathrun.Entities.Points.InitialSpectatorPoint : Sandbox.Entity 
 // 
 @PointClass editormodel( "models/editor/camera.vmdl" ) frustum( Fov, ZNear, ZFar, Color )
