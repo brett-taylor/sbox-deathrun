@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Sandbox;
+using SBoxDeathrun.Entities.Triggers;
 
 namespace SBoxDeathrun.Entities.Paths
 {
@@ -28,21 +29,25 @@ namespace SBoxDeathrun.Entities.Paths
 			if ( DEATH_CAMERA_PATH_DEBUG )
 			{
 				DrawPath( DEATH_CAMERA_PATH_SEGMENTS );
-				DebugOverlay.Sphere(GetPositionOnCurve(0.25f), 5f, Color.Red);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.50f), 5f, Color.Red);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.75f), 5f, Color.Red);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.10f), 5f, Color.Blue);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.20f), 5f, Color.Blue);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.30f), 5f, Color.Blue);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.40f), 5f, Color.Blue);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.50f), 5f, Color.Blue);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.60f), 5f, Color.Blue);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.70f), 5f, Color.Blue);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.80f), 5f, Color.Blue);
-				DebugOverlay.Sphere(GetPositionOnCurve(0.90f), 5f, Color.Blue);
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.25f ), 5f, Color.Red );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.50f ), 5f, Color.Red );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.75f ), 5f, Color.Red );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.10f ), 5f, Color.Blue );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.20f ), 5f, Color.Blue );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.30f ), 5f, Color.Blue );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.40f ), 5f, Color.Blue );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.50f ), 5f, Color.Blue );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.60f ), 5f, Color.Blue );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.70f ), 5f, Color.Blue );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.80f ), 5f, Color.Blue );
+				DebugOverlay.Sphere( GetPositionOnCurve( 0.90f ), 5f, Color.Blue );
 
 				var lineIndex = 0;
 				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, "DeathCameraPath Debug:" );
+				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, "Red sphere every 25%" );
+				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, "Blue sphere every 10%" );
+				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, "Yellow Spheres show trap camera and purple sphere its line position" );
+				lineIndex++;
 				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"Node Count: {PathNodes.Count}" );
 				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"Segment Count: {Segments.Count}" );
 				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"Path Length: {TotalLength}" );
@@ -54,6 +59,13 @@ namespace SBoxDeathrun.Entities.Paths
 						$"Segment: {segment.Length} Range: {segment.PercentageFrom} - {segment.PercentageTo}" );
 
 				DebugOverlay.ScreenText( Vector2.One * 100f, lineIndex++, Color.Yellow, $"Length From Segments: {Segments.Select( s => s.Length ).Sum()}" );
+
+				var trapCameras = All.OfType<TrapCamera>();
+				foreach ( var trapCamera in trapCameras )
+				{
+					DebugOverlay.Sphere( GetPositionOnCurve( trapCamera.DeathPathLocation ), 1f, Color.Magenta );	
+					DebugOverlay.Sphere( trapCamera.Position, 1f, Color.Yellow );	
+				}
 			}
 		}
 	}

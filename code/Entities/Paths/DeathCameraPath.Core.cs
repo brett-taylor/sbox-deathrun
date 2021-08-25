@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sandbox;
@@ -93,6 +94,31 @@ namespace SBoxDeathrun.Entities.Paths
 		public static DeathCameraPath Get()
 		{
 			return All.OfType<DeathCameraPath>().First();
+		}
+		
+		public float GetPercentageFromPoint( Vector3 point )
+		{
+			// 0.0025f accuracy is 9 iterations.
+			return GetPercentageFromPoint( point, 0f, 1f, 0.0025f );
+		}
+
+		private float GetPercentageFromPoint( Vector3 point, float pathPercentageFrom, float pathPercentageTo, float accuracy )
+		{
+			var anchor = pathPercentageFrom.LerpTo(pathPercentageTo, 0.5f);
+			var leftSide = pathPercentageFrom.LerpTo(anchor, 0.5f);
+			var rightSide = anchor.LerpTo( pathPercentageTo, 0.5f );
+			
+			// If the difference is less than our accuracy, just return the anchor.
+			if ( MathF.Abs( rightSide - leftSide ) <= accuracy )
+				return anchor;
+
+			// If its greater, than work out which side is closer, and do it again with those.
+			var leftSideDistance = GetPositionOnCurve( leftSide ).Distance( point );
+			var rightSideDistance = GetPositionOnCurve( rightSide ).Distance( point );
+
+			return leftSideDistance < rightSideDistance 
+				? GetPercentageFromPoint( point, pathPercentageFrom, anchor, accuracy ) 
+				: GetPercentageFromPoint( point, anchor, pathPercentageTo, accuracy );
 		}
 	}
 }
