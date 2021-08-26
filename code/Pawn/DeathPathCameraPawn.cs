@@ -38,8 +38,9 @@ namespace SBoxDeathrun.Pawn
 				DeathPathPercentage += Input.Down( InputButton.Forward ) ? MOVE_SPEED * Time.Delta : 0f;
 				DeathPathPercentage += Input.Down( InputButton.Back ) ? -MOVE_SPEED * Time.Delta : 0f;
 				DeathPathPercentage = DeathPathPercentage.Clamp( 0f, 1f );
-				TargetCameraPosition = DeathCameraPath.GetPositionOnCurve( DeathPathPercentage );
-				TargetCameraRotation = DeathCameraPath.GetRotationOnCurve( DeathPathPercentage );
+				var PositionAndRotation = DeathCameraPath.GetPositionAndRotationOnCurve( DeathPathPercentage );
+				TargetCameraPosition = PositionAndRotation.position;
+				TargetCameraRotation = PositionAndRotation.rotation;
 			}
 
 			var dpc = Camera as DeathPathCamera;

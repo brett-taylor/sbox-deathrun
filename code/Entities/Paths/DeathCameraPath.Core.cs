@@ -62,6 +62,17 @@ namespace SBoxDeathrun.Entities.Paths
 			return Segments.First( s => s.IsPercentageWithinRange( currentPathPercentage, TotalPercentageFromSegments ) );
 		}
 
+		public (Vector3 position, Rotation rotation) GetPositionAndRotationOnCurve ( float currentPathPercentage )
+		{
+			var currentSegment = GetSegmentFromPercentage( currentPathPercentage );
+			var requiredDistance = TotalLength * currentPathPercentage;
+			var segmentLowerDistance = TotalLength * currentSegment.PercentageFrom;
+			var remainingDistance = requiredDistance - segmentLowerDistance;
+			var finalAdjustedPercentage = remainingDistance / currentSegment.Length;
+			var positionAndRotation = this.GetPointAndNormalBetweenNodes( currentSegment.From, currentSegment.To, finalAdjustedPercentage );
+			return (positionAndRotation.point, Rotation.LookAt( positionAndRotation.normal ));
+		}
+
 		public Vector3 GetPositionOnCurve( float currentPathPercentage )
 		{
 			var currentSegment = GetSegmentFromPercentage( currentPathPercentage );
