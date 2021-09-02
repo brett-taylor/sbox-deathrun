@@ -9,9 +9,9 @@ namespace SBoxDeathrun.Entities.Triggers
 	[EntityTool( "Deathrun Trap", "Deathrun Sbox", "A entity to store information about a trap" )]
 	public partial class Trap : Entity
 	{
-		[Property] [Net] public int Number { get; set; } = 0;
+		[Property] [Net] public int Number { get; private set; } = 0;
 		[Property] [Net] public TrapCamera TrapCamera { get; set; }
-
+		
 		public void Setup()
 		{
 			TrapCamera = All.OfType<TrapCamera>().FirstOrDefault( tc => tc.EntityName == $"{EntityName}_camera" );

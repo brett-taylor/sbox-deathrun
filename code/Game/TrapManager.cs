@@ -6,15 +6,15 @@ using SBoxDeathrun.Entities.Triggers;
 
 namespace SBoxDeathrun
 {
-	public class TrapManager : NetworkComponent
+	public partial class TrapManager : Entity
 	{
-		private IReadOnlyCollection<Trap> Traps { get; set; }
+		[Net] public List<Trap> Traps { get; private set; }
 
 		public void PostLevelLoaded()
 		{
 			Host.AssertServer();
 
-			Traps = Entity.All.OfType<Trap>().ToList();
+			Traps = All.OfType<Trap>().ToList();
 			SanityCheckTraps();
 
 			foreach ( var trap in Traps )
@@ -23,11 +23,10 @@ namespace SBoxDeathrun
 
 		private void SanityCheckTraps()
 		{
-			var trapNumbers = Traps.Select( t => t.Number ).OrderBy( i => i ).ToList();
-
 			if ( !Traps.Any() )
-				Log.Warning( $"No traps found, probably an issue?" );
+				Log.Error( $"No traps found, probably an issue?" );
 
+			var trapNumbers = Traps.Select( t => t.Number ).OrderBy( i => i ).ToList();
 			Log.Info( $"Traps Found: {string.Join( ", ", trapNumbers )}" );
 
 			// Check the list of trapNumbers is 0...length, no duplicates and in order.

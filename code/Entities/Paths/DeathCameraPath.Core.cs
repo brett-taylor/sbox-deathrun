@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sandbox;
+using SBoxDeathrun.Utils.Extensions;
 
 namespace SBoxDeathrun.Entities.Paths
 {
@@ -62,15 +63,15 @@ namespace SBoxDeathrun.Entities.Paths
 			return Segments.First( s => s.IsPercentageWithinRange( currentPathPercentage, TotalPercentageFromSegments ) );
 		}
 
-		public (Vector3 position, Rotation rotation) GetPositionAndRotationOnCurve ( float currentPathPercentage )
+		public (Vector3 position, Rotation rotation) GetPositionAndRotationOnCurve( float currentPathPercentage )
 		{
 			var currentSegment = GetSegmentFromPercentage( currentPathPercentage );
 			var requiredDistance = TotalLength * currentPathPercentage;
 			var segmentLowerDistance = TotalLength * currentSegment.PercentageFrom;
 			var remainingDistance = requiredDistance - segmentLowerDistance;
 			var finalAdjustedPercentage = remainingDistance / currentSegment.Length;
-			var positionAndRotation = this.GetPointAndNormalBetweenNodes( currentSegment.From, currentSegment.To, finalAdjustedPercentage );
-			return (positionAndRotation.point, Rotation.LookAt( positionAndRotation.normal ));
+			var (point, normal) = this.GetPointAndNormalBetweenNodes( currentSegment.From, currentSegment.To, finalAdjustedPercentage );
+			return (point, Rotation.LookAt( normal ));
 		}
 
 		public Vector3 GetPositionOnCurve( float currentPathPercentage )
@@ -83,30 +84,11 @@ namespace SBoxDeathrun.Entities.Paths
 			return GetPointBetweenNodes( currentSegment.From, currentSegment.To, finalAdjustedPercentage );
 		}
 
-		public Rotation GetRotationOnCurve( float currentPathPercentage )
-		{
-			Vector3 pointOne;
-			Vector3 pointTwo;
-
-			if ( currentPathPercentage >= 0.97f )
-			{
-				pointOne = GetPositionOnCurve( (currentPathPercentage - 0.03f).Clamp( 0f, 1f ) );
-				pointTwo = GetPositionOnCurve( currentPathPercentage );
-			}
-			else
-			{
-				pointOne = GetPositionOnCurve( currentPathPercentage );
-				pointTwo = GetPositionOnCurve( (currentPathPercentage + 0.03f).Clamp( 0f, 1f ) );
-			}
-
-			return Rotation.LookAt( (pointTwo - pointOne).Normal );
-		}
-
 		public static DeathCameraPath Get()
 		{
 			return All.OfType<DeathCameraPath>().First();
 		}
-		
+
 		public float GetPercentageFromPoint( Vector3 point )
 		{
 			// 0.0025f accuracy is 9 iterations.
@@ -115,10 +97,10 @@ namespace SBoxDeathrun.Entities.Paths
 
 		private float GetPercentageFromPoint( Vector3 point, float pathPercentageFrom, float pathPercentageTo, float accuracy )
 		{
-			var anchor = pathPercentageFrom.LerpTo(pathPercentageTo, 0.5f);
-			var leftSide = pathPercentageFrom.LerpTo(anchor, 0.5f);
+			var anchor = pathPercentageFrom.LerpTo( pathPercentageTo, 0.5f );
+			var leftSide = pathPercentageFrom.LerpTo( anchor, 0.5f );
 			var rightSide = anchor.LerpTo( pathPercentageTo, 0.5f );
-			
+
 			// If the difference is less than our accuracy, just return the anchor.
 			if ( MathF.Abs( rightSide - leftSide ) <= accuracy )
 				return anchor;
@@ -127,8 +109,8 @@ namespace SBoxDeathrun.Entities.Paths
 			var leftSideDistance = GetPositionOnCurve( leftSide ).Distance( point );
 			var rightSideDistance = GetPositionOnCurve( rightSide ).Distance( point );
 
-			return leftSideDistance < rightSideDistance 
-				? GetPercentageFromPoint( point, pathPercentageFrom, anchor, accuracy ) 
+			return leftSideDistance < rightSideDistance
+				? GetPercentageFromPoint( point, pathPercentageFrom, anchor, accuracy )
 				: GetPercentageFromPoint( point, anchor, pathPercentageTo, accuracy );
 		}
 	}

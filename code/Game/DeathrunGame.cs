@@ -9,7 +9,6 @@ namespace SBoxDeathrun
 	public partial class DeathrunGame : Game
 	{
 		public new static DeathrunGame Current => Game.Current as DeathrunGame;
-		[Net] public Entity DeathEntity { get; private set; }
 		[Net] public RoundManager RoundManager { get; private set; }
 		[Net] public TeamManager TeamManager { get; private set; }
 		[Net] public TrapManager TrapManager { get; private set; }
@@ -23,9 +22,6 @@ namespace SBoxDeathrun
 			TeamManager = new TeamManager();
 			TrapManager = new TrapManager();
 			_ = new DeathrunHudEntity();
-
-			DeathEntity = new Entity();
-			DeathEntity.EntityName = "Death";
 		}
 
 		public override void ClientJoined( Client client )

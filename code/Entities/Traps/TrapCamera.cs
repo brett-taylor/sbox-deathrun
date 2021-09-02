@@ -15,6 +15,12 @@ namespace SBoxDeathrun.Entities.Triggers
 
 		public float DeathPathLocation { get; private set; } = 0f;
 
+		public override void Spawn()
+		{
+			base.Spawn();
+			Transmit = TransmitType.Always;
+		}
+
 		public void CalculateDeathPathLocation()
 		{
 			DeathPathLocation = DeathCameraPath.Get().GetPercentageFromPoint( Position );

@@ -8,7 +8,7 @@ namespace SBoxDeathrun.Pawn
 	{
 		[ConVar.ReplicatedAttribute( "deathrun_death_camera_pawn_move_speed" )]
 		public static float MOVE_SPEED { get; set; } = 0.2f;
-		
+
 		[Net, Local] private Vector3 TargetCameraPosition { get; set; }
 		[Net, Local] private Rotation TargetCameraRotation { get; set; }
 
@@ -38,9 +38,10 @@ namespace SBoxDeathrun.Pawn
 				DeathPathPercentage += Input.Down( InputButton.Forward ) ? MOVE_SPEED * Time.Delta : 0f;
 				DeathPathPercentage += Input.Down( InputButton.Back ) ? -MOVE_SPEED * Time.Delta : 0f;
 				DeathPathPercentage = DeathPathPercentage.Clamp( 0f, 1f );
-				var PositionAndRotation = DeathCameraPath.GetPositionAndRotationOnCurve( DeathPathPercentage );
-				TargetCameraPosition = PositionAndRotation.position;
-				TargetCameraRotation = PositionAndRotation.rotation;
+
+				var (position, rotation) = DeathCameraPath.GetPositionAndRotationOnCurve( DeathPathPercentage );
+				TargetCameraPosition = position;
+				TargetCameraRotation = rotation;
 			}
 
 			var dpc = Camera as DeathPathCamera;
